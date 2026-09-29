@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#1e3a8a">
+<title>ICT Master Guide</title>
+<link rel="manifest" href="/manifest.json">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#f4f6fb; color:#1a1a1a; line-height:1.6; padding-bottom:80px; }
+  .header { background:linear-gradient(135deg,#1e3a8a,#3b82f6); color:#fff; padding:28px 20px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+  .header h1 { font-size:22px; font-weight:700; margin-bottom:6px; }
+  .header p { font-size:13px; opacity:0.9; }
+  .container { max-width:720px; margin:0 auto; padding:20px; }
+  .chapter-card { background:#fff; border-radius:14px; padding:18px; margin-bottom:14px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+  .chapter-card h3 { font-size:17px; color:#1e3a8a; margin-bottom:8px; }
+  .chapter-card p { font-size:14px; color:#666; }
+  .chapter-card.locked { background:#f8f9fc; border:1px dashed #cbd5e1; }
+  .chapter-card .btn { display:inline-block; margin-top:10px; padding:10px 20px; border-radius:8px; background:#1e3a8a; color:#fff; text-decoration:none; font-size:14px; font-weight:600; border:none; cursor:pointer; }
+  .chapter-card.locked .btn { background:#e5e7eb; color:#6b7280; }
+  .buy-banner { background:linear-gradient(135deg,#f59e0b,#f97316); color:#fff; border-radius:14px; padding:22px; text-align:center; margin-bottom:20px; }
+  .buy-banner h2 { font-size:19px; margin-bottom:6px; }
+  .buy-banner .price { font-size:28px; font-weight:800; margin:8px 0; }
+  .buy-banner button { background:#fff; color:#ea580c; border:none; padding:12px 28px; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; }
+  .modal { position:fixed; inset:0; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; padding:20px; z-index:100; }
+  .modal.active { display:flex; }
+  .modal-box { background:#fff; border-radius:16px; padding:24px; max-width:420px; width:100%; max-height:90vh; overflow-y:auto; }
+  .modal-box h3 { color:#1e3a8a; margin-bottom:12px; }
+  .modal-box input { width:100%; padding:14px; border:2px solid #e5e7eb; border-radius:10px; font-size:16px; margin-bottom:12px; }
+  .modal-box input:focus { outline:none; border-color:#3b82f6; }
+  .modal-box button.primary { width:100%; padding:14px; background:#1e3a8a; color:#fff; border:none; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; }
+  .modal-box button.close { background:transparent; color:#666; border:none; padding:8px; margin-top:8px; cursor:pointer; font-size:14px; }
+  .modal-box .msg { font-size:14px; color:#dc2626; margin-top:8px; min-height:20px; }
+  .modal-box .disclaimer { font-size:11px; color:#888; margin-top:12px; line-height:1.5; }
+  .modal-box .whatsapp-btn { display:block; margin-top:12px; background:#25d366; color:#fff; text-align:center; padding:12px; border-radius:10px; text-decoration:none; font-weight:600; }
+  .reader { position:fixed; inset:0; background:#fff; z-index:200; display:none; overflow-y:auto; }
+  .reader.active { display:block; }
+  .reader-bar { position:sticky; top:0; background:#1e3a8a; color:#fff; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; }
+  .reader-bar button { background:transparent; color:#fff; border:none; font-size:16px; cursor:pointer; }
+  .reader-content { padding:20px; max-width:680px; margin:auto; font-size:16px; line-height:1.7; }
+  .reader-content h1 { color:#1e3a8a; margin:20px 0 14px; font-size:22px; }
+  .reader-content h2 { color:#1e3a8a; margin:18px 0 10px; font-size:19px; }
+  .reader-content h3 { color:#1e40af; margin:14px 0 8px; font-size:17px; }
+  .reader-content p { margin-bottom:12px; }
+  .reader-content pre { background:#1e293b; color:#e2e8f0; padding:14px; border-radius:8px; overflow-x:auto; font-size:12px; line-height:1.4; margin:12px 0; }
+  .reader-content table { width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; }
+  .reader-content th, .reader-content td { border:1px solid #e5e7eb; padding:8px; text-align:left; }
+  .reader-content th { background:#f3f4f6; font-weight:700; }
+  .reader-content ul, .reader-content ol { margin:10px 0 14px 22px; }
+  .reader-content li { margin-bottom:6px; }
+  .reader-content img { max-width:100%; border-radius:8px; margin:12px 0; }
+  .spinner { display:inline-block; width:16px; height:16px; border:2px solid #e5e7eb; border-top-color:#1e3a8a; border-radius:50%; animation:spin 0.7s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .footer { text-align:center; padding:24px; color:#94a3b8; font-size:12px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Computer Appreciation & ICT Master Guide</h1>
+  <p>From First Click to CBT Champion</p>
+</div>
+
+<div class="container" id="app">
+  <div style="text-align:center;padding:40px;">
+    <span class="spinner"></span>
+  </div>
+</div>
+
+<!-- PIN entry modal -->
+<div class="modal" id="pinModal">
+  <div class="modal-box">
+    <h3>Unlock Modules 3–10</h3>
+    <p style="font-size:14px;color:#666;margin-bottom:14px;">Enter the PIN we sent to your phone and email.</p>
+    <input type="tel" id="pinInput" placeholder="6-digit PIN" maxlength="6" inputmode="numeric">
+    <button class="primary" onclick="redeemPin()">Unlock Now</button>
+    <div class="msg" id="pinMsg"></div>
+    <button class="close" onclick="closePinModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- Checkout modal -->
+<div class="modal" id="buyModal">
+  <div class="modal-box">
+    <h3>Buy Full Access — ₦1,200</h3>
+    <p style="font-size:14px;color:#666;margin-bottom:14px;">Unlock Modules 3–10. Instant delivery by SMS and email.</p>
+    <input type="email" id="buyEmail" placeholder="Your email address">
+    <input type="tel" id="buyPhone" placeholder="Your phone number (e.g. 07073519187)">
+    <button class="primary" onclick="startCheckout()">Pay ₦1,200 Securely</button>
+    <div class="msg" id="buyMsg"></div>
+    <div class="disclaimer">By purchasing, you agree: digital goods are non-refundable once unlocked. Please try the free preview (Modules 1 &amp; 2) first.</div>
+    <button class="close" onclick="closeBuyModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- Reader -->
+<div class="reader" id="reader">
+  <div class="reader-bar">
+    <button onclick="closeReader()">← Back</button>
+    <span id="readerTitle" style="font-weight:600;">Module</span>
+    <span style="width:60px;"></span>
+  </div>
+  <div class="reader-content" id="readerContent"></div>
+</div>
+
+<script>
+const SUPPORT = '2347073519187';
+const FREE_N = [1,2];
+
+function getDeviceId() {
+  let id = localStorage.getItem('device_id');
+  if (!id) {
+    id = (crypto.randomUUID ? crypto.randomUUID() : 'd' + Date.now() + Math.random().toString(36).slice(2));
+    localStorage.setItem('device_id', id);
+  }
+  return id;
+}
+
+function getToken() { return localStorage.getItem('token'); }
+
+async function loadApp() {
+  const res = await fetch('/api/preview');
+  const data = await res.json();
+  renderApp(data);
+}
+
+function renderApp(data) {
+  const app = document.getElementById('app');
+  let html = '';
+
+  if (!getToken()) {
+    html += `
+      <div class="buy-banner">
+        <h2>Unlock All 10 Modules</h2>
+        <div class="price">₦1,200</div>
+        <p style="font-size:13px;opacity:0.95;margin-bottom:12px;">One-time payment · Instant access</p>
+        <button onclick="openBuyModal()">Buy Now</button>
+      </div>
+      <div style="text-align:center;margin-bottom:18px;">
+        <button onclick="openPinModal()" style="background:none;border:none;color:#1e3a8a;text-decoration:underline;font-size:14px;cursor:pointer;">Already paid? Enter your PIN</button>
+      </div>
+    `;
+  }
+
+  data.chapters.forEach(ch => {
+    html += `
+      <div class="chapter-card">
+        <h3>Module ${ch.n}: ${ch.title.replace(/^MODULE \\d+:\\s*/,'')}</h3>
+        <p>Free Preview</p>
+        <button class="btn" onclick="openFreeChapter(${ch.n})">Read Now</button>
+      </div>
+    `;
+  });
+
+  data.locked.forEach(n => {
+    const unlocked = !!getToken();
+    html += `
+      <div class="chapter-card locked">
+        <h3>Module ${n} 🔒</h3>
+        <p>${unlocked ? 'Tap to read' : 'Locked — purchase to unlock'}</p>
+        <button class="btn" ${unlocked ? `onclick="openPaidChapter(${n})"` : `onclick="openBuyModal()"`}>
+          ${unlocked ? 'Read Now' : '🔒 Locked'}
+        </button>
+      </div>
+    `;
+  });
+
+  html += `<div class="footer">© ICT Master Guide<br>Support: <a href="https://wa.me/${SUPPORT}" style="color:#3b82f6;">WhatsApp</a></div>`;
+
+  app.innerHTML = html;
+}
+
+function openBuyModal() { document.getElementById('buyModal').classList.add('active'); }
+function closeBuyModal() { document.getElementById('buyModal').classList.remove('active'); }
+function openPinModal() { document.getElementById('pinModal').classList.add('active'); }
+function closePinModal() { document.getElementById('pinModal').classList.remove('active'); }
+
+async function startCheckout() {
+  const email = document.getElementById('buyEmail').value.trim();
+  const phone = document.getElementById('buyPhone').value.trim();
+  const msg = document.getElementById('buyMsg');
+
+  if (!email || !phone) { msg.textContent = 'Please enter both email and phone.'; return; }
+  msg.innerHTML = '<span class="spinner"></span>';
+
+  try {
+    const res = await fetch('/api/checkout', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ email, phone })
+    });
+    const data = await res.json();
+    if (data.checkout_url) {
+      window.location.href = data.checkout_url;
+    } else {
+      msg.textContent = 'Could not start payment. Try again.';
+    }
+  } catch (e) {
+    msg.textContent = 'Network error. Please try again.';
+  }
+}
+
+async function redeemPin() {
+  const pin = document.getElementById('pinInput').value.trim();
+  const msg = document.getElementById('pinMsg');
+  if (!pin) { msg.textContent = 'Enter your PIN.'; return; }
+  msg.innerHTML = '<span class="spinner"></span>';
+
+  try {
+    const res = await fetch('/api/unlock', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ pin, device_id: getDeviceId() })
+    });
+    const data = await res.json();
+
+    if (res.ok && data.token) {
+      localStorage.setItem('token', data.token);
+      closePinModal();
+      loadApp();
+      return;
+    }
+
+    if (data.error === 'in_use_elsewhere') {
+      const text = encodeURIComponent(`Hello, I need a new PIN. My phone changed. PIN tried: ${pin}`);
+      msg.innerHTML = `This PIN is already active on another phone.<br><a class="whatsapp-btn" target="_blank" href="https://wa.me/${SUPPORT}?text=${text}">Request new PIN on WhatsApp</a>`;
+      return;
+    }
+
+    msg.textContent = data.error === 'invalid_pin' ? 'Wrong PIN.' :
+                      data.error === 'too_many_tries' ? 'Too many attempts. Try later.' :
+                      'Could not unlock. Try again.';
+  } catch (e) {
+    msg.textContent = 'Network error.';
+  }
+}
+
+async function openFreeChapter(n) {
+  const res = await fetch('/api/preview');
+  const data = await res.json();
+  const ch = data.chapters.find(c => c.n === n);
+  if (ch) showReader(`Module ${n}`, ch.body);
+}
+
+async function openPaidChapter(n) {
+  const token = getToken();
+  if (!token) { openBuyModal(); return; }
+
+  const cacheKey = `ch-${n}`;
+  const cached = localStorage.getItem(cacheKey);
+  if (cached) { showReader(`Module ${n}`, cached); return; }
+
+  document.getElementById('readerContent').innerHTML = '<div style="text-align:center;padding:40px;"><span class="spinner"></span></div>';
+  document.getElementById('reader').classList.add('active');
+
+  try {
+    const res = await fetch(`/api/chapters/${n}`, {
+      headers: {
+        'x-session-token': token,
+        'x-device-id': getDeviceId()
+      }
+    });
+    if (!res.ok) {
+      closeReader();
+      if (res.status === 401) { localStorage.removeItem('token'); loadApp(); }
+      return;
+    }
+    const text = await res.text();
+    localStorage.setItem(cacheKey, text);
+    showReader(`Module ${n}`, text);
+  } catch (e) {
+    closeReader();
+    alert('Network error. Cannot load chapter.');
+  }
+}
+
+function showReader(title, markdown) {
+  document.getElementById('readerTitle').textContent = title;
+  document.getElementById('readerContent').innerHTML = renderMarkdown(markdown);
+  document.getElementById('reader').classList.add('active');
+  document.getElementById('reader').scrollTop = 0;
+}
+
+function closeReader() {
+  document.getElementById('reader').classList.remove('active');
+}
+
+function renderMarkdown(md) {
+  md = md.replace(/\\u200B/g, '');
+  let html = md
+    .replace(/```([\\s\\S]*?)```/g, (_, code) => `<pre>${escapeHtml(code.trim())}</pre>`)
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/\\*\\*(.+?)\\*\\*/g, '<strong>$1</strong>')
+    .replace(/\\*(.+?)\\*/g, '<em>$1</em>')
+    .replace(/^\\s*[-*] (.+)$/gm, '<li>$1</li>')
+    .replace(/^\\s*(\\d+)\\. (.+)$/gm, '<li>$2</li>');
+
+  html = html.replace(/(<li>[\\s\\S]*?<\\/li>)(?!\\s*<li>)/g, '<ul>$1</ul>');
+  html = html.replace(/<\\/ul>\\s*<ul>/g, '');
+
+  html = html.split(/\\n{2,}/).map(block => {
+    if (block.match(/^<(h[1-3]|ul|pre|table)/)) return block;
+    if (block.match(/^<li/)) return '<ul>' + block + '</ul>';
+    return block.trim() ? '<p>' + block.replace(/\\n/g, '<br>') + '</p>' : '';
+  }).join('');
+
+  html = html.replace(/<table>([\\s\\S]*?)<\\/table>/g, (m, inner) => {
+    return '<table>' + inner + '</table>';
+  });
+
+  return html;
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// Handle payment redirect
+const params = new URLSearchParams(window.location.search);
+if (params.get('ref')) {
+  fetch('/api/verify/' + params.get('ref'))
+    .then(r => r.json())
+    .then(d => { if (d.paid) alert('Payment received! Check your email/SMS for the PIN.'); });
+}
+
+// Start
+loadApp();
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
+</body>
+  </html>
