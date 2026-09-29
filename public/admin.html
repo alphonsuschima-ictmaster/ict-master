@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — ICT Master Guide</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#0f172a; color:#e2e8f0; line-height:1.6; min-height:100vh; padding:20px; }
+  .container { max-width:900px; margin:0 auto; }
+  h1 { font-size:22px; margin-bottom:6px; color:#f1f5f9; }
+  .sub { color:#94a3b8; font-size:13px; margin-bottom:20px; }
+  .card { background:#1e293b; border-radius:12px; padding:20px; margin-bottom:16px; box-shadow:0 4px 12px rgba(0,0,0,0.3); }
+  label { display:block; font-size:13px; color:#94a3b8; margin-bottom:6px; margin-top:12px; }
+  input, textarea { width:100%; padding:12px; border-radius:8px; border:1px solid #334155; background:#0f172a; color:#e2e8f0; font-size:14px; font-family:inherit; }
+  input:focus, textarea:focus { outline:none; border-color:#3b82f6; }
+  button { padding:12px 20px; border-radius:8px; border:none; font-size:14px; font-weight:600; cursor:pointer; margin-top:14px; }
+  .btn-primary { background:#3b82f6; color:#fff; }
+  .btn-primary:hover { background:#2563eb; }
+  .btn-success { background:#10b981; color:#fff; }
+  .btn-danger { background:#dc2626; color:#fff; }
+  .btn-secondary { background:#475569; color:#fff; }
+  .hidden { display:none; }
+  .result { background:#0f172a; border:1px solid #334155; border-radius:8px; padding:14px; margin-top:14px; font-family:monospace; font-size:13px; word-break:break-all; }
+  .pin-display { font-size:32px; letter-spacing:6px; color:#10b981; font-weight:bold; text-align:center; padding:20px; }
+  table { width:100%; border-collapse:collapse; margin-top:14px; font-size:13px; }
+  th, td { padding:10px; text-align:left; border-bottom:1px solid #334155; }
+  th { color:#94a3b8; font-weight:600; font-size:12px; text-transform:uppercase; }
+  tr:hover { background:#0f172a; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:6px; font-size:11px; font-weight:600; }
+  .badge-paid { background:#065f46; color:#6ee7b7; }
+  .badge-pending { background:#78350f; color:#fcd34d; }
+  .error { color:#fca5a5; margin-top:10px; font-size:13px; }
+  .success { color:#6ee7b7; margin-top:10px; font-size:13px; }
+  .tabs { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+  .tab { padding:8px 16px; background:#334155; border-radius:8px; cursor:pointer; font-size:13px; }
+  .tab.active { background:#3b82f6; color:#fff; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>ICT Master Guide — Admin</h1>
+  <div class="sub">Private panel. Authorized access only.</div>
+
+  <!-- Login -->
+  <div id="loginSection" class="card">
+    <h3>Enter Admin Key</h3>
+    <input type="password" id="adminKeyInput" placeholder="Paste your Admin Key here">
+    <button class="btn-primary" onclick="login()">Enter</button>
+    <div id="loginError" class="error"></div>
+  </div>
+
+  <!-- Panel -->
+  <div id="panelSection" class="hidden">
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('manual')">Manual PIN</div>
+      <div class="tab" onclick="showTab('reissue')">Reissue PIN</div>
+      <div class="tab" onclick="showTab('sales')">Sales List</div>
+    </div>
+
+    <!-- Manual PIN -->
+    <div id="tab-manual" class="card">
+      <h3>Generate Manual PIN</h3>
+      <p style="font-size:13px;color:#94a3b8;margin-top:6px;">For buyers who paid you directly (cash, bank transfer).</p>
+      <label>Buyer's Email</label>
+      <input type="email" id="manualEmail" placeholder="buyer@example.com">
+      <label>Buyer's Phone (optional)</label>
+      <input type="tel" id="manualPhone" placeholder="07073519187">
+      <label>Reference (optional)</label>
+      <input type="text" id="manualRef" placeholder="Cash sale 30 Sept">
+      <button class="btn-success" onclick="generateManualPin()">Generate PIN</button>
+      <div id="manualResult"></div>
+    </div>
+
+    <!-- Reissue PIN -->
+    <div id="tab-reissue" class="card hidden">
+      <h3>Reissue PIN</h3>
+      <p style="font-size:13px;color:#94a3b8;margin-top:6px;">When a buyer changes phone. First reissue is free; subsequent ones cost ₦200.</p>
+      <label>Buyer's Email</label>
+      <input type="email" id="reissueEmail" placeholder="buyer@example.com">
+      <button class="btn-primary" onclick="reissuePin()">Reissue PIN</button>
+      <div id="reissueResult"></div>
+    </div>
+
+    <!-- Sales List -->
+    <div id="tab-sales" class="card hidden">
+      <h3>All Sales</h3>
+      <button class="btn-secondary" onclick="loadSales()">Refresh List</button>
+      <div id="salesResult"></div>
+    </div>
+
+    <button class="btn-danger" onclick="logout()" style="margin-top:20px;">Log Out</button>
+  </div>
+</div>
+
+<script>
+let adminKey = sessionStorage.getItem('adminKey') || '';
+
+function login() {
+  const key = document.getElementById('adminKeyInput').value.trim();
+  if (!key) { document.getElementById('loginError').textContent = 'Enter your Admin Key.'; return; }
+  adminKey = key;
+  sessionStorage.setItem('adminKey', adminKey);
+  checkAccess();
+}
+
+async function checkAccess() {
+  try {
+    const res = await fetch('/api/admin/sales', {
+      headers: { 'x-admin-key': adminKey }
+    });
+    if (res.ok) {
+      document.getElementById('loginSection').classList.add('hidden');
+      document.getElementById('panelSection').classList.remove('hidden');
+      document.getElementById('loginError').textContent = '';
+    } else {
+      document.getElementById('loginError').textContent = 'Invalid Admin Key.';
+      sessionStorage.removeItem('adminKey');
+    }
+  } catch (e) {
+    document.getElementById('loginError').textContent = 'Network error.';
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('adminKey');
+  adminKey = '';
+  document.getElementById('loginSection').classList.remove('hidden');
+  document.getElementById('panelSection').classList.add('hidden');
+}
+
+function showTab(name) {
+  ['manual','reissue','sales'].forEach(t => {
+    document.getElementById('tab-' + t).classList.toggle('hidden', t !== name);
+  });
+  document.querySelectorAll('.tab').forEach((el, i) => {
+    el.classList.toggle('active', ['manual','reissue','sales'][i] === name);
+  });
+}
+
+async function generateManualPin() {
+  const email = document.getElementById('manualEmail').value.trim();
+  const phone = document.getElementById('manualPhone').value.trim();
+  const reference = document.getElementById('manualRef').value.trim();
+  const out = document.getElementById('manualResult');
+
+  if (!email) { out.innerHTML = '<div class="error">Email required.</div>'; return; }
+  out.innerHTML = 'Generating...';
+
+  try {
+    const res = await fetch('/api/admin/manual-pin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+      body: JSON.stringify({ email, phone, reference })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      out.innerHTML = `
+        <div class="pin-display">${data.pin}</div>
+        <div class="success">✅ PIN generated and sent by email/SMS to ${email}</div>
+        <div class="result">Reference: ${data.reference}</div>
+      `;
+    } else {
+      out.innerHTML = '<div class="error">Error: ' + (data.error || 'unknown') + '</div>';
+    }
+  } catch (e) {
+    out.innerHTML = '<div class="error">Network error.</div>';
+  }
+}
+
+async function reissuePin() {
+  const email = document.getElementById('reissueEmail').value.trim();
+  const out = document.getElementById('reissueResult');
+
+  if (!email) { out.innerHTML = '<div class="error">Email required.</div>'; return; }
+  out.innerHTML = 'Reissuing...';
+
+  try {
+    const res = await fetch('/api/admin/reissue', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      out.innerHTML = `
+        <div class="pin-display">${data.pin}</div>
+        <div class="success">✅ New PIN sent to ${data.emailed_to}</div>
+        <div class="result">Reissue count: ${data.reissue_count}</div>
+      `;
+    } else {
+      out.innerHTML = '<div class="error">Error: ' + (data.error || 'unknown') + '</div>';
+    }
+  } catch (e) {
+    out.innerHTML = '<div class="error">Network error.</div>';
+  }
+}
+
+async function loadSales() {
+  const out = document.getElementById('salesResult');
+  out.innerHTML = 'Loading...';
+  try {
+    const res = await fetch('/api/admin/sales', { headers: { 'x-admin-key': adminKey } });
+    const data = await res.json();
+    if (!data.sales || data.sales.length === 0) {
+      out.innerHTML = '<p style="margin-top:12px;color:#94a3b8;">No sales yet.</p>';
+      return;
+    }
+    let html = '<table><thead><tr><th>#</th><th>Email</th><th>Phone</th><th>Status</th><th>Reissues</th><th>Date</th></tr></thead><tbody>';
+    data.sales.forEach(s => {
+      html += `<tr>
+        <td>${s.id}</td>
+        <td>${s.email || '—'}</td>
+        <td>${s.phone || '—'}</td>
+        <td><span class="badge ${s.paid ? 'badge-paid' : 'badge-pending'}">${s.paid ? 'PAID' : 'PENDING'}</span></td>
+        <td>${s.reissue_count || 0}</td>
+        <td>${s.created_at || ''}</td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+    out.innerHTML = html;
+  } catch (e) {
+    out.innerHTML = '<div class="error">Network error.</div>';
+  }
+}
+
+// Auto-login if key in session
+if (adminKey) {
+  document.getElementById('adminKeyInput').value = adminKey;
+  checkAccess();
+}
+</script>
+</body>
+  </html>
