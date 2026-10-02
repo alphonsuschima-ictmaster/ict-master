@@ -35,7 +35,7 @@ The **CPU** is often called **"the brain of the computer."** It is a small silic
 
 3. **Registers** — Tiny, ultra-fast storage locations **inside** the CPU that hold data currently being worked on. They are the fastest memory in the entire computer.
 
-### CPU Architecture Diagram
+### CPU Architecture Diagramhttps://ict-master.onrender.com/images/1790430034869.png
 ┌───────────────────────────────────────┐
 │        CENTRAL PROCESSING UNIT        │
 │              (CPU)                    │
