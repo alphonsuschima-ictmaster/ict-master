@@ -53,6 +53,7 @@
   .spinner { display:inline-block; width:16px; height:16px; border:2px solid #e5e7eb; border-top-color:#1e3a8a; border-radius:50%; animation:spin 0.7s linear infinite; }
   @keyframes spin { to { transform:rotate(360deg); } }
   .footer { text-align:center; padding:24px; color:#94a3b8; font-size:12px; }
+  .error-box { background:#fee2e2; color:#991b1b; padding:14px; border-radius:10px; margin:14px 0; font-size:13px; word-break:break-all; }
 </style>
 </head>
 <body>
@@ -105,8 +106,8 @@
 </div>
 
 <script>
+const API_BASE = 'https://ict-master.onrender.com';
 const SUPPORT = '2347073519187';
-const FREE_N = [1,2];
 
 function getDeviceId() {
   let id = localStorage.getItem('device_id');
@@ -120,9 +121,20 @@ function getDeviceId() {
 function getToken() { return localStorage.getItem('token'); }
 
 async function loadApp() {
-  const res = await fetch('/api/preview');
-  const data = await res.json();
-  renderApp(data);
+  const app = document.getElementById('app');
+  try {
+    const res = await fetch(API_BASE + '/api/preview');
+    if (!res.ok) throw new Error('API returned ' + res.status);
+    const data = await res.json();
+    renderApp(data);
+  } catch (e) {
+    app.innerHTML = `
+      <div class="error-box">
+        <strong>Loading error:</strong> ${escapeHtml(e.message)}<br><br>
+        Please refresh the page. If this continues, contact support on WhatsApp.
+      </div>
+    `;
+  }
 }
 
 function renderApp(data) {
@@ -185,7 +197,7 @@ async function startCheckout() {
   msg.innerHTML = '<span class="spinner"></span>';
 
   try {
-    const res = await fetch('/api/checkout', {
+    const res = await fetch(API_BASE + '/api/checkout', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ email, phone })
@@ -208,7 +220,7 @@ async function redeemPin() {
   msg.innerHTML = '<span class="spinner"></span>';
 
   try {
-    const res = await fetch('/api/unlock', {
+    const res = await fetch(API_BASE + '/api/unlock', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ pin, device_id: getDeviceId() })
@@ -237,10 +249,14 @@ async function redeemPin() {
 }
 
 async function openFreeChapter(n) {
-  const res = await fetch('/api/preview');
-  const data = await res.json();
-  const ch = data.chapters.find(c => c.n === n);
-  if (ch) showReader(`Module ${n}`, ch.body);
+  try {
+    const res = await fetch(API_BASE + '/api/preview');
+    const data = await res.json();
+    const ch = data.chapters.find(c => c.n === n);
+    if (ch) showReader(`Module ${n}`, ch.body);
+  } catch (e) {
+    alert('Could not load chapter. Please refresh.');
+  }
 }
 
 async function openPaidChapter(n) {
@@ -255,7 +271,7 @@ async function openPaidChapter(n) {
   document.getElementById('reader').classList.add('active');
 
   try {
-    const res = await fetch(`/api/chapters/${n}`, {
+    const res = await fetch(API_BASE + '/api/chapters/' + n, {
       headers: {
         'x-session-token': token,
         'x-device-id': getDeviceId()
@@ -321,9 +337,10 @@ function escapeHtml(s) {
 // Handle payment redirect
 const params = new URLSearchParams(window.location.search);
 if (params.get('ref')) {
-  fetch('/api/verify/' + params.get('ref'))
+  fetch(API_BASE + '/api/verify/' + params.get('ref'))
     .then(r => r.json())
-    .then(d => { if (d.paid) alert('Payment received! Check your email/SMS for the PIN.'); });
+    .then(d => { if (d.paid) alert('Payment received! Check your email/SMS for the PIN.'); })
+    .catch(() => {});
 }
 
 // Start
@@ -335,4 +352,4 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 </body>
-  </html>
+</html>
