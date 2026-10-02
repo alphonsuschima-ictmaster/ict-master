@@ -69,7 +69,6 @@
   </div>
 </div>
 
-<!-- PIN entry modal -->
 <div class="modal" id="pinModal">
   <div class="modal-box">
     <h3>Unlock Modules 3–10</h3>
@@ -81,7 +80,6 @@
   </div>
 </div>
 
-<!-- Checkout modal -->
 <div class="modal" id="buyModal">
   <div class="modal-box">
     <h3>Buy Full Access — ₦1,200</h3>
@@ -95,7 +93,6 @@
   </div>
 </div>
 
-<!-- Reader -->
 <div class="reader" id="reader">
   <div class="reader-bar">
     <button onclick="closeReader()">← Back</button>
@@ -128,12 +125,7 @@ async function loadApp() {
     const data = await res.json();
     renderApp(data);
   } catch (e) {
-    app.innerHTML = `
-      <div class="error-box">
-        <strong>Loading error:</strong> ${escapeHtml(e.message)}<br><br>
-        Please refresh the page. If this continues, contact support on WhatsApp.
-      </div>
-    `;
+    app.innerHTML = '<div class="error-box"><strong>Loading error:</strong> ' + escapeHtml(e.message) + '<br><br>Please refresh the page or contact support on WhatsApp.</div>';
   }
 }
 
@@ -142,44 +134,19 @@ function renderApp(data) {
   let html = '';
 
   if (!getToken()) {
-    html += `
-      <div class="buy-banner">
-        <h2>Unlock All 10 Modules</h2>
-        <div class="price">₦1,200</div>
-        <p style="font-size:13px;opacity:0.95;margin-bottom:12px;">One-time payment · Instant access</p>
-        <button onclick="openBuyModal()">Buy Now</button>
-      </div>
-      <div style="text-align:center;margin-bottom:18px;">
-        <button onclick="openPinModal()" style="background:none;border:none;color:#1e3a8a;text-decoration:underline;font-size:14px;cursor:pointer;">Already paid? Enter your PIN</button>
-      </div>
-    `;
+    html += '<div class="buy-banner"><h2>Unlock All 10 Modules</h2><div class="price">₦1,200</div><p style="font-size:13px;opacity:0.95;margin-bottom:12px;">One-time payment · Instant access</p><button onclick="openBuyModal()">Buy Now</button></div><div style="text-align:center;margin-bottom:18px;"><button onclick="openPinModal()" style="background:none;border:none;color:#1e3a8a;text-decoration:underline;font-size:14px;cursor:pointer;">Already paid? Enter your PIN</button></div>';
   }
 
   data.chapters.forEach(ch => {
-    html += `
-      <div class="chapter-card">
-        <h3>Module ${ch.n}: ${ch.title.replace(/^MODULE \\d+:\\s*/,'')}</h3>
-        <p>Free Preview</p>
-        <button class="btn" onclick="openFreeChapter(${ch.n})">Read Now</button>
-      </div>
-    `;
+    html += '<div class="chapter-card"><h3>Module ' + ch.n + ': ' + ch.title.replace(/^MODULE \\d+:\\s*/,'') + '</h3><p>Free Preview</p><button class="btn" onclick="openFreeChapter(' + ch.n + ')">Read Now</button></div>';
   });
 
   data.locked.forEach(n => {
     const unlocked = !!getToken();
-    html += `
-      <div class="chapter-card locked">
-        <h3>Module ${n} 🔒</h3>
-        <p>${unlocked ? 'Tap to read' : 'Locked — purchase to unlock'}</p>
-        <button class="btn" ${unlocked ? `onclick="openPaidChapter(${n})"` : `onclick="openBuyModal()"`}>
-          ${unlocked ? 'Read Now' : '🔒 Locked'}
-        </button>
-      </div>
-    `;
+    html += '<div class="chapter-card locked"><h3>Module ' + n + ' 🔒</h3><p>' + (unlocked ? 'Tap to read' : 'Locked — purchase to unlock') + '</p><button class="btn" ' + (unlocked ? 'onclick="openPaidChapter(' + n + ')"' : 'onclick="openBuyModal()"') + '>' + (unlocked ? 'Read Now' : '🔒 Locked') + '</button></div>';
   });
 
-  html += `<div class="footer">© ICT Master Guide<br>Support: <a href="https://wa.me/${SUPPORT}" style="color:#3b82f6;">WhatsApp</a></div>`;
-
+  html += '<div class="footer">© ICT Master Guide<br>Support: <a href="https://wa.me/' + SUPPORT + '" style="color:#3b82f6;">WhatsApp</a></div>';
   app.innerHTML = html;
 }
 
@@ -192,10 +159,8 @@ async function startCheckout() {
   const email = document.getElementById('buyEmail').value.trim();
   const phone = document.getElementById('buyPhone').value.trim();
   const msg = document.getElementById('buyMsg');
-
   if (!email || !phone) { msg.textContent = 'Please enter both email and phone.'; return; }
   msg.innerHTML = '<span class="spinner"></span>';
-
   try {
     const res = await fetch(API_BASE + '/api/checkout', {
       method:'POST',
@@ -203,14 +168,9 @@ async function startCheckout() {
       body: JSON.stringify({ email, phone })
     });
     const data = await res.json();
-    if (data.checkout_url) {
-      window.location.href = data.checkout_url;
-    } else {
-      msg.textContent = 'Could not start payment. Try again.';
-    }
-  } catch (e) {
-    msg.textContent = 'Network error. Please try again.';
-  }
+    if (data.checkout_url) { window.location.href = data.checkout_url; }
+    else { msg.textContent = 'Could not start payment. Try again.'; }
+  } catch (e) { msg.textContent = 'Network error. Please try again.'; }
 }
 
 async function redeemPin() {
@@ -218,7 +178,6 @@ async function redeemPin() {
   const msg = document.getElementById('pinMsg');
   if (!pin) { msg.textContent = 'Enter your PIN.'; return; }
   msg.innerHTML = '<span class="spinner"></span>';
-
   try {
     const res = await fetch(API_BASE + '/api/unlock', {
       method:'POST',
@@ -226,26 +185,19 @@ async function redeemPin() {
       body: JSON.stringify({ pin, device_id: getDeviceId() })
     });
     const data = await res.json();
-
     if (res.ok && data.token) {
       localStorage.setItem('token', data.token);
       closePinModal();
       loadApp();
       return;
     }
-
     if (data.error === 'in_use_elsewhere') {
-      const text = encodeURIComponent(`Hello, I need a new PIN. My phone changed. PIN tried: ${pin}`);
-      msg.innerHTML = `This PIN is already active on another phone.<br><a class="whatsapp-btn" target="_blank" href="https://wa.me/${SUPPORT}?text=${text}">Request new PIN on WhatsApp</a>`;
+      const text = encodeURIComponent('Hello, I need a new PIN. My phone changed. PIN tried: ' + pin);
+      msg.innerHTML = 'This PIN is already active on another phone.<br><a class="whatsapp-btn" target="_blank" href="https://wa.me/' + SUPPORT + '?text=' + text + '">Request new PIN on WhatsApp</a>';
       return;
     }
-
-    msg.textContent = data.error === 'invalid_pin' ? 'Wrong PIN.' :
-                      data.error === 'too_many_tries' ? 'Too many attempts. Try later.' :
-                      'Could not unlock. Try again.';
-  } catch (e) {
-    msg.textContent = 'Network error.';
-  }
+    msg.textContent = data.error === 'invalid_pin' ? 'Wrong PIN.' : data.error === 'too_many_tries' ? 'Too many attempts. Try later.' : 'Could not unlock. Try again.';
+  } catch (e) { msg.textContent = 'Network error.'; }
 }
 
 async function openFreeChapter(n) {
@@ -253,29 +205,21 @@ async function openFreeChapter(n) {
     const res = await fetch(API_BASE + '/api/preview');
     const data = await res.json();
     const ch = data.chapters.find(c => c.n === n);
-    if (ch) showReader(`Module ${n}`, ch.body);
-  } catch (e) {
-    alert('Could not load chapter. Please refresh.');
-  }
+    if (ch) showReader('Module ' + n, ch.body);
+  } catch (e) { alert('Could not load chapter. Please refresh.'); }
 }
 
 async function openPaidChapter(n) {
   const token = getToken();
   if (!token) { openBuyModal(); return; }
-
-  const cacheKey = `ch-${n}`;
+  const cacheKey = 'ch-' + n;
   const cached = localStorage.getItem(cacheKey);
-  if (cached) { showReader(`Module ${n}`, cached); return; }
-
+  if (cached) { showReader('Module ' + n, cached); return; }
   document.getElementById('readerContent').innerHTML = '<div style="text-align:center;padding:40px;"><span class="spinner"></span></div>';
   document.getElementById('reader').classList.add('active');
-
   try {
     const res = await fetch(API_BASE + '/api/chapters/' + n, {
-      headers: {
-        'x-session-token': token,
-        'x-device-id': getDeviceId()
-      }
+      headers: { 'x-session-token': token, 'x-device-id': getDeviceId() }
     });
     if (!res.ok) {
       closeReader();
@@ -284,11 +228,8 @@ async function openPaidChapter(n) {
     }
     const text = await res.text();
     localStorage.setItem(cacheKey, text);
-    showReader(`Module ${n}`, text);
-  } catch (e) {
-    closeReader();
-    alert('Network error. Cannot load chapter.');
-  }
+    showReader('Module ' + n, text);
+  } catch (e) { closeReader(); alert('Network error. Cannot load chapter.'); }
 }
 
 function showReader(title, markdown) {
@@ -298,14 +239,12 @@ function showReader(title, markdown) {
   document.getElementById('reader').scrollTop = 0;
 }
 
-function closeReader() {
-  document.getElementById('reader').classList.remove('active');
-}
+function closeReader() { document.getElementById('reader').classList.remove('active'); }
 
 function renderMarkdown(md) {
   md = md.replace(/\\u200B/g, '');
   let html = md
-    .replace(/```([\\s\\S]*?)```/g, (_, code) => `<pre>${escapeHtml(code.trim())}</pre>`)
+    .replace(/```([\\s\\S]*?)```/g, function(_, code) { return '<pre>' + escapeHtml(code.trim()) + '</pre>'; })
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
     .replace(/^## (.+)$/gm, '<h2>$1</h2>')
     .replace(/^# (.+)$/gm, '<h1>$1</h1>')
@@ -313,20 +252,13 @@ function renderMarkdown(md) {
     .replace(/\\*(.+?)\\*/g, '<em>$1</em>')
     .replace(/^\\s*[-*] (.+)$/gm, '<li>$1</li>')
     .replace(/^\\s*(\\d+)\\. (.+)$/gm, '<li>$2</li>');
-
   html = html.replace(/(<li>[\\s\\S]*?<\\/li>)(?!\\s*<li>)/g, '<ul>$1</ul>');
   html = html.replace(/<\\/ul>\\s*<ul>/g, '');
-
-  html = html.split(/\\n{2,}/).map(block => {
+  html = html.split(/\\n{2,}/).map(function(block) {
     if (block.match(/^<(h[1-3]|ul|pre|table)/)) return block;
     if (block.match(/^<li/)) return '<ul>' + block + '</ul>';
     return block.trim() ? '<p>' + block.replace(/\\n/g, '<br>') + '</p>' : '';
   }).join('');
-
-  html = html.replace(/<table>([\\s\\S]*?)<\\/table>/g, (m, inner) => {
-    return '<table>' + inner + '</table>';
-  });
-
   return html;
 }
 
@@ -334,21 +266,18 @@ function escapeHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-// Handle payment redirect
 const params = new URLSearchParams(window.location.search);
 if (params.get('ref')) {
   fetch(API_BASE + '/api/verify/' + params.get('ref'))
-    .then(r => r.json())
-    .then(d => { if (d.paid) alert('Payment received! Check your email/SMS for the PIN.'); })
-    .catch(() => {});
+    .then(function(r) { return r.json(); })
+    .then(function(d) { if (d.paid) alert('Payment received! Check your email/SMS for the PIN.'); })
+    .catch(function() {});
 }
 
-// Start
 loadApp();
 
-// Register service worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
+  navigator.serviceWorker.register('/sw.js').catch(function() {});
 }
 </script>
 </body>
