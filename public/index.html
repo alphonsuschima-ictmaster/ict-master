@@ -7,53 +7,53 @@
 <title>ICT Master Guide</title>
 <link rel="manifest" href="/manifest.json">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#f4f6fb; color:#1a1a1a; line-height:1.6; padding-bottom:80px; }
-  .header { background:linear-gradient(135deg,#1e3a8a,#3b82f6); color:#fff; padding:28px 20px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-  .header h1 { font-size:22px; font-weight:700; margin-bottom:6px; }
-  .header p { font-size:13px; opacity:0.9; }
-  .container { max-width:720px; margin:0 auto; padding:20px; }
-  .chapter-card { background:#fff; border-radius:14px; padding:18px; margin-bottom:14px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
-  .chapter-card h3 { font-size:17px; color:#1e3a8a; margin-bottom:8px; }
-  .chapter-card p { font-size:14px; color:#666; }
-  .chapter-card.locked { background:#f8f9fc; border:1px dashed #cbd5e1; }
-  .chapter-card .btn { display:inline-block; margin-top:10px; padding:10px 20px; border-radius:8px; background:#1e3a8a; color:#fff; text-decoration:none; font-size:14px; font-weight:600; border:none; cursor:pointer; }
-  .chapter-card.locked .btn { background:#e5e7eb; color:#6b7280; }
-  .buy-banner { background:linear-gradient(135deg,#f59e0b,#f97316); color:#fff; border-radius:14px; padding:22px; text-align:center; margin-bottom:20px; }
-  .buy-banner h2 { font-size:19px; margin-bottom:6px; }
-  .buy-banner .price { font-size:28px; font-weight:800; margin:8px 0; }
-  .buy-banner button { background:#fff; color:#ea580c; border:none; padding:12px 28px; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; }
-  .modal { position:fixed; inset:0; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; padding:20px; z-index:100; }
-  .modal.active { display:flex; }
-  .modal-box { background:#fff; border-radius:16px; padding:24px; max-width:420px; width:100%; max-height:90vh; overflow-y:auto; }
-  .modal-box h3 { color:#1e3a8a; margin-bottom:12px; }
-  .modal-box input { width:100%; padding:14px; border:2px solid #e5e7eb; border-radius:10px; font-size:16px; margin-bottom:12px; }
-  .modal-box input:focus { outline:none; border-color:#3b82f6; }
-  .modal-box button.primary { width:100%; padding:14px; background:#1e3a8a; color:#fff; border:none; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; }
-  .modal-box button.close { background:transparent; color:#666; border:none; padding:8px; margin-top:8px; cursor:pointer; font-size:14px; }
-  .modal-box .msg { font-size:14px; color:#dc2626; margin-top:8px; min-height:20px; }
-  .modal-box .disclaimer { font-size:11px; color:#888; margin-top:12px; line-height:1.5; }
-  .modal-box .whatsapp-btn { display:block; margin-top:12px; background:#25d366; color:#fff; text-align:center; padding:12px; border-radius:10px; text-decoration:none; font-weight:600; }
-  .reader { position:fixed; inset:0; background:#fff; z-index:200; display:none; overflow-y:auto; }
-  .reader.active { display:block; }
-  .reader-bar { position:sticky; top:0; background:#1e3a8a; color:#fff; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; }
-  .reader-bar button { background:transparent; color:#fff; border:none; font-size:16px; cursor:pointer; }
-  .reader-content { padding:20px; max-width:680px; margin:auto; font-size:16px; line-height:1.7; }
-  .reader-content h1 { color:#1e3a8a; margin:20px 0 14px; font-size:22px; }
-  .reader-content h2 { color:#1e3a8a; margin:18px 0 10px; font-size:19px; }
-  .reader-content h3 { color:#1e40af; margin:14px 0 8px; font-size:17px; }
-  .reader-content p { margin-bottom:12px; }
-  .reader-content pre { background:#1e293b; color:#e2e8f0; padding:14px; border-radius:8px; overflow-x:auto; font-size:12px; line-height:1.4; margin:12px 0; }
-  .reader-content table { width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; }
-  .reader-content th, .reader-content td { border:1px solid #e5e7eb; padding:8px; text-align:left; }
-  .reader-content th { background:#f3f4f6; font-weight:700; }
-  .reader-content ul, .reader-content ol { margin:10px 0 14px 22px; }
-  .reader-content li { margin-bottom:6px; }
-  .reader-content img { width:100%; height:auto; border-radius:8px; margin:16px 0; display:block; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
-  .spinner { display:inline-block; width:16px; height:16px; border:2px solid #e5e7eb; border-top-color:#1e3a8a; border-radius:50%; animation:spin 0.7s linear infinite; }
-  @keyframes spin { to { transform:rotate(360deg); } }
-  .footer { text-align:center; padding:24px; color:#94a3b8; font-size:12px; }
-  .error-box { background:#fee2e2; color:#991b1b; padding:16px; border-radius:10px; margin:14px 0; font-size:13px; line-height:1.6; word-break:break-word; }
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#f4f6fb; color:#1a1a1a; line-height:1.6; padding-bottom:80px; }
+.header { background:linear-gradient(135deg,#1e3a8a,#3b82f6); color:#fff; padding:28px 20px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+.header h1 { font-size:22px; font-weight:700; margin-bottom:6px; }
+.header p { font-size:13px; opacity:0.9; }
+.container { max-width:720px; margin:0 auto; padding:20px; }
+.chapter-card { background:#fff; border-radius:14px; padding:18px; margin-bottom:14px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+.chapter-card h3 { font-size:17px; color:#1e3a8a; margin-bottom:8px; }
+.chapter-card p { font-size:14px; color:#666; }
+.chapter-card.locked { background:#f8f9fc; border:1px dashed #cbd5e1; }
+.chapter-card .btn { display:inline-block; margin-top:10px; padding:10px 20px; border-radius:8px; background:#1e3a8a; color:#fff; text-decoration:none; font-size:14px; font-weight:600; border:none; cursor:pointer; }
+.chapter-card.locked .btn { background:#e5e7eb; color:#6b7280; }
+.buy-banner { background:linear-gradient(135deg,#f59e0b,#f97316); color:#fff; border-radius:14px; padding:22px; text-align:center; margin-bottom:20px; }
+.buy-banner h2 { font-size:19px; margin-bottom:6px; }
+.buy-banner .price { font-size:28px; font-weight:800; margin:8px 0; }
+.buy-banner button { background:#fff; color:#ea580c; border:none; padding:12px 28px; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; }
+.modal { position:fixed; inset:0; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; padding:20px; z-index:100; }
+.modal.active { display:flex; }
+.modal-box { background:#fff; border-radius:16px; padding:24px; max-width:420px; width:100%; max-height:90vh; overflow-y:auto; }
+.modal-box h3 { color:#1e3a8a; margin-bottom:12px; }
+.modal-box input { width:100%; padding:14px; border:2px solid #e5e7eb; border-radius:10px; font-size:16px; margin-bottom:12px; }
+.modal-box input:focus { outline:none; border-color:#3b82f6; }
+.modal-box button.primary { width:100%; padding:14px; background:#1e3a8a; color:#fff; border:none; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; }
+.modal-box button.close { background:transparent; color:#666; border:none; padding:8px; margin-top:8px; cursor:pointer; font-size:14px; }
+.modal-box .msg { font-size:14px; color:#dc2626; margin-top:8px; min-height:20px; }
+.modal-box .disclaimer { font-size:11px; color:#888; margin-top:12px; line-height:1.5; }
+.modal-box .whatsapp-btn { display:block; margin-top:12px; background:#25d366; color:#fff; text-align:center; padding:12px; border-radius:10px; text-decoration:none; font-weight:600; }
+.reader { position:fixed; inset:0; background:#fff; z-index:200; display:none; overflow-y:auto; }
+.reader.active { display:block; }
+.reader-bar { position:sticky; top:0; background:#1e3a8a; color:#fff; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; }
+.reader-bar button { background:transparent; color:#fff; border:none; font-size:16px; cursor:pointer; }
+.reader-content { padding:20px; max-width:680px; margin:auto; font-size:16px; line-height:1.7; }
+.reader-content h1 { color:#1e3a8a; margin:20px 0 14px; font-size:22px; }
+.reader-content h2 { color:#1e3a8a; margin:18px 0 10px; font-size:19px; }
+.reader-content h3 { color:#1e40af; margin:14px 0 8px; font-size:17px; }
+.reader-content p { margin-bottom:12px; }
+.reader-content pre { background:#1e293b; color:#e2e8f0; padding:14px; border-radius:8px; overflow-x:auto; font-size:12px; line-height:1.4; margin:12px 0; }
+.reader-content table { width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; }
+.reader-content th, .reader-content td { border:1px solid #e5e7eb; padding:8px; text-align:left; }
+.reader-content th { background:#f3f4f6; font-weight:700; }
+.reader-content ul, .reader-content ol { margin:10px 0 14px 22px; }
+.reader-content li { margin-bottom:6px; }
+.reader-content img { display:block; width:100%; max-width:100%; height:auto; border-radius:8px; margin:16px 0; }
+.spinner { display:inline-block; width:16px; height:16px; border:2px solid #e5e7eb; border-top-color:#1e3a8a; border-radius:50%; animation:spin 0.7s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.footer { text-align:center; padding:24px; color:#94a3b8; font-size:12px; }
+.error-box { background:#fee2e2; color:#991b1b; padding:16px; border-radius:10px; margin:14px 0; font-size:13px; line-height:1.6; word-break:break-word; }
 </style>
 </head>
 <body>
@@ -105,7 +105,6 @@
 <script>
 const API_BASE = '';
 const SUPPORT = '2347073519187';
-
 function getDeviceId() {
   let id = localStorage.getItem('device_id');
   if (!id) {
@@ -114,9 +113,7 @@ function getDeviceId() {
   }
   return id;
 }
-
 function getToken() { return localStorage.getItem('token'); }
-
 async function loadApp() {
   const app = document.getElementById('app');
   try {
@@ -135,33 +132,26 @@ async function loadApp() {
     app.innerHTML = '<div class="error-box"><strong>Could not load the app.</strong><br><br>' + msg + '<br><br>Please refresh the page. If this continues, contact support on WhatsApp.</div>';
   }
 }
-
 function renderApp(data) {
   const app = document.getElementById('app');
   let html = '';
-
   if (!getToken()) {
     html += '<div class="buy-banner"><h2>Unlock All 10 Modules</h2><div class="price">₦1,200</div><p style="font-size:13px;opacity:0.95;margin-bottom:12px;">One-time payment · Instant access</p><button onclick="openBuyModal()">Buy Now</button></div><div style="text-align:center;margin-bottom:18px;"><button onclick="openPinModal()" style="background:none;border:none;color:#1e3a8a;text-decoration:underline;font-size:14px;cursor:pointer;">Already paid? Enter your PIN</button></div>';
   }
-
   data.chapters.forEach(function(ch) {
     html += '<div class="chapter-card"><h3>Module ' + ch.n + ': ' + ch.title.replace(/^MODULE \d+:\s*/,'') + '</h3><p>Free Preview</p><button class="btn" onclick="openFreeChapter(' + ch.n + ')">Read Now</button></div>';
   });
-
   data.locked.forEach(function(n) {
     const unlocked = !!getToken();
     html += '<div class="chapter-card locked"><h3>Module ' + n + ' 🔒</h3><p>' + (unlocked ? 'Tap to read' : 'Locked — purchase to unlock') + '</p><button class="btn" ' + (unlocked ? 'onclick="openPaidChapter(' + n + ')"' : 'onclick="openBuyModal()"') + '>' + (unlocked ? 'Read Now' : '🔒 Locked') + '</button></div>';
   });
-
   html += '<div class="footer">© ICT Master Guide<br>Support: <a href="https://wa.me/' + SUPPORT + '" style="color:#3b82f6;">WhatsApp</a></div>';
   app.innerHTML = html;
 }
-
 function openBuyModal() { document.getElementById('buyModal').classList.add('active'); }
 function closeBuyModal() { document.getElementById('buyModal').classList.remove('active'); }
 function openPinModal() { document.getElementById('pinModal').classList.add('active'); }
 function closePinModal() { document.getElementById('pinModal').classList.remove('active'); }
-
 async function startCheckout() {
   const email = document.getElementById('buyEmail').value.trim();
   const phone = document.getElementById('buyPhone').value.trim();
@@ -179,7 +169,6 @@ async function startCheckout() {
     else { msg.textContent = 'Could not start payment. Try again.'; }
   } catch (e) { msg.textContent = 'Network error. Please try again.'; }
 }
-
 async function redeemPin() {
   const pin = document.getElementById('pinInput').value.trim();
   const msg = document.getElementById('pinMsg');
@@ -206,7 +195,6 @@ async function redeemPin() {
     msg.textContent = data.error === 'invalid_pin' ? 'Wrong PIN.' : data.error === 'too_many_tries' ? 'Too many attempts. Try later.' : 'Could not unlock. Try again.';
   } catch (e) { msg.textContent = 'Network error.'; }
 }
-
 async function openFreeChapter(n) {
   try {
     const res = await fetch(API_BASE + '/api/preview');
@@ -215,7 +203,6 @@ async function openFreeChapter(n) {
     if (ch) showReader('Module ' + n, ch.body);
   } catch (e) { alert('Could not load chapter. Please refresh.'); }
 }
-
 async function openPaidChapter(n) {
   const token = getToken();
   if (!token) { openBuyModal(); return; }
@@ -238,21 +225,18 @@ async function openPaidChapter(n) {
     showReader('Module ' + n, text);
   } catch (e) { closeReader(); alert('Network error. Cannot load chapter.'); }
 }
-
 function showReader(title, markdown) {
   document.getElementById('readerTitle').textContent = title;
   document.getElementById('readerContent').innerHTML = renderMarkdown(markdown);
   document.getElementById('reader').classList.add('active');
   document.getElementById('reader').scrollTop = 0;
 }
-
 function closeReader() { document.getElementById('reader').classList.remove('active'); }
-
 function renderMarkdown(md) {
   md = md.replace(/\u200B/g, '');
   let html = md
     .replace(/```([\s\S]*?)```/g, function(_, code) { return '<pre>' + escapeHtml(code.trim()) + '</pre>'; })
-    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="width:100%;height:auto;border-radius:8px;margin:16px 0;display:block;box-shadow:0 2px 8px rgba(0,0,0,0.08);">')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">')
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
     .replace(/^## (.+)$/gm, '<h2>$1</h2>')
     .replace(/^# (.+)$/gm, '<h1>$1</h1>')
@@ -269,11 +253,9 @@ function renderMarkdown(md) {
   }).join('');
   return html;
 }
-
 function escapeHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
-
 const params = new URLSearchParams(window.location.search);
 if (params.get('ref')) {
   fetch(API_BASE + '/api/verify/' + params.get('ref'))
@@ -281,9 +263,7 @@ if (params.get('ref')) {
     .then(function(d) { if (d.paid) alert('Payment received! Check your email/SMS for the PIN.'); })
     .catch(function() {});
 }
-
 loadApp();
-
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(function() {});
 }
