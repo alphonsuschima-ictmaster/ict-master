@@ -1,53 +1,59 @@
-const CACHE_NAME = 'ict-master-v1';
-const STATIC_ASSETS = [
+const CACHE_NAME = 'ict-master-v3';
+const ASSETS = [
   '/',
-  '/manifest.json'
+  '/index.html'
 ];
 
-// Install — cache static assets
+// Install: cache core assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
   );
   self.skipWaiting();
 });
 
-// Activate — clean old caches
+// Activate: delete ALL old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      );
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// Fetch — serve from cache first for static, network first for API
+// Fetch: network-first for HTML, cache-first for static, never cache API
 self.addEventListener('fetch', (event) => {
-  const { request } = event;
-  const url = new URL(request.url);
+  const url = new URL(event.request.url);
 
-  // Never cache API calls — always go to network
-  if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/webhook/')) {
+  // API calls — always go to server, never cache
+  if (url.pathname.startsWith('/api/')) {
     return;
   }
 
-  // For everything else: try cache, fall back to network
+  // HTML pages — network first (fresh every time)
+  if (event.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === '/') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request).then((c) => c || caches.match('/index.html')))
+    );
+    return;
+  }
+
+  // Other static assets — cache first
   event.respondWith(
-    caches.match(request).then((cached) => {
-      return cached || fetch(request).then((response) => {
-        // Cache successful GET responses
-        if (request.method === 'GET' && response.status === 200) {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-        }
-        return response;
-      }).catch(() => {
-        // Offline fallback — serve home page
-        if (request.mode === 'navigate') {
-          return caches.match('/');
-        }
-      });
-    })
+    caches.match(event.request).then((cached) => cached || fetch(event.request))
   );
 });
