@@ -49,11 +49,10 @@
   .reader-content th { background:#f3f4f6; font-weight:700; }
   .reader-content ul, .reader-content ol { margin:10px 0 14px 22px; }
   .reader-content li { margin-bottom:6px; }
-  .reader-content img { max-width:100%; border-radius:8px; margin:12px 0; }
   .spinner { display:inline-block; width:16px; height:16px; border:2px solid #e5e7eb; border-top-color:#1e3a8a; border-radius:50%; animation:spin 0.7s linear infinite; }
   @keyframes spin { to { transform:rotate(360deg); } }
   .footer { text-align:center; padding:24px; color:#94a3b8; font-size:12px; }
-  .error-box { background:#fee2e2; color:#991b1b; padding:14px; border-radius:10px; margin:14px 0; font-size:13px; word-break:break-all; }
+  .error-box { background:#fee2e2; color:#991b1b; padding:16px; border-radius:10px; margin:14px 0; font-size:13px; line-height:1.6; word-break:break-word; }
 </style>
 </head>
 <body>
@@ -103,7 +102,9 @@
 </div>
 
 <script>
-const API_BASE = 'https://ict-master.onrender.com';
+// FIX 1: Use relative path — works from any domain
+const API_BASE = '';
+
 const SUPPORT = '2347073519187';
 
 function getDeviceId() {
@@ -117,15 +118,17 @@ function getDeviceId() {
 
 function getToken() { return localStorage.getItem('token'); }
 
+// FIX 2: Always hide spinner — even on error
 async function loadApp() {
   const app = document.getElementById('app');
   try {
     const res = await fetch(API_BASE + '/api/preview');
-    if (!res.ok) throw new Error('API returned ' + res.status);
+    if (!res.ok) throw new Error('Server returned ' + res.status);
     const data = await res.json();
     renderApp(data);
   } catch (e) {
-    app.innerHTML = '<div class="error-box"><strong>Loading error:</strong> ' + escapeHtml(e.message) + '<br><br>Please refresh the page or contact support on WhatsApp.</div>';
+    console.error('Load error:', e);
+    app.innerHTML = '<div class="error-box"><strong>Could not load the app.</strong><br><br>Error: ' + (e.message || 'Unknown error') + '<br><br>Please check your internet connection and refresh. If this continues, contact support on WhatsApp.</div>';
   }
 }
 
