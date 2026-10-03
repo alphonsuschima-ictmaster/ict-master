@@ -36,8 +36,7 @@ Every computer, no matter how big or small, performs exactly **four functions**:
 3. **OUTPUT** — Presenting the processed information to the user.
 4. **STORAGE** — Saving data and information for future use.
 
-### The Computer Block Diagram 
-![Computer Block Diagram](https://ict-master.onrender.com/images/1790429997745.png
+![Computer Block Diagram](https://ict-master.onrender.com/images/1790429997745.png)master.onrender.com/images/1790429997745.png
 
 **How to remember it:** Think of a bank. Input = you filling the deposit slip. Processing = the cashier counting your money. Output = the receipt and your updated balance. Storage = the bank's records kept for later.
 
