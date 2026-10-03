@@ -1,10 +1,9 @@
-const CACHE_NAME = 'ict-master-v3';
+const CACHE_NAME = 'ict-master-v4';
 const ASSETS = [
   '/',
   '/index.html'
 ];
 
-// Install: cache core assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
@@ -12,7 +11,6 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Activate: delete ALL old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -27,16 +25,22 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch: network-first for HTML, cache-first for static, never cache API
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // API calls — always go to server, never cache
+  // Never cache API requests — always fetch fresh
   if (url.pathname.startsWith('/api/')) {
+    event.respondWith(
+      fetch(event.request).catch(() => {
+        return new Response(JSON.stringify({ error: 'offline' }), {
+          headers: { 'Content-Type': 'application/json' }
+        });
+      })
+    );
     return;
   }
 
-  // HTML pages — network first (fresh every time)
+  // Network-first for HTML — ensures fresh content
   if (event.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === '/') {
     event.respondWith(
       fetch(event.request)
@@ -52,7 +56,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Other static assets — cache first
+  // Cache-first for other static assets
   event.respondWith(
     caches.match(event.request).then((cached) => cached || fetch(event.request))
   );
