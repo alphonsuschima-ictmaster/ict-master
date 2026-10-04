@@ -7,6 +7,7 @@ A **computer** is an electronic device that accepts data (input), processes it a
 Put simply: **a computer is a machine that turns raw data into useful information.**
 
 **Data** = raw, unorganised facts. Example: `75, 80, 90, 60`
+
 **Information** = processed, meaningful data. Example: `The class average is 76%`
 
 ### Key Characteristics of a Computer
@@ -35,7 +36,11 @@ Every computer, no matter how big or small, performs exactly **four functions**:
 2. **PROCESSING** — Transforming that data into useful information.
 3. **OUTPUT** — Presenting the processed information to the user.
 4. **STORAGE** — Saving data and information for future use.
-![Computer Block Diagram](https://ict-master.onrender.com/images/1790429997745.png)master.onrender.com/images/1790429997745.png
+
+### The Computer Block Diagram
+
+![Computer Block Diagram](https://ict-master.onrender.com/images/1790429997745.png)
+
 **How to remember it:** Think of a bank. Input = you filling the deposit slip. Processing = the cashier counting your money. Output = the receipt and your updated balance. Storage = the bank's records kept for later.
 
 ---
@@ -47,38 +52,149 @@ Every computer, no matter how big or small, performs exactly **four functions**:
 - **Supercomputer:** The most powerful and most expensive. Used for weather forecasting, space research, nuclear simulation.
 - **Mainframe:** Handles massive data for large organisations like banks, airlines, and government agencies.
 - **Mini Computer (Mid-range):** Sits between mainframe and micro. Used by medium-sized businesses.
-- **Microcomputer (Personal Computer — PC):** The type you use every day — desktops, laptops, tablets.
+- **Microcomputer (Personal Computer — PC):** The type you use every day — desktops, laptops, tablets, smartphones.
 - **Mobile Devices:** Smartphones, smartwatches, PDAs.
 
 ### Desktop vs. Laptop vs. Tablet
 
-| Feature | Desktop | Laptop | Tablet |
-|---|---|---|---|
-| Portability | Not portable | Highly portable | Extremely portable |
-| Power | Highest | Moderate to high | Lowest |
-| Upgradeability | Easy | Limited | Very limited |
-| Screen Size | 19"–32" | 11"–17" | 7"–13" |
-| Battery | None | 3–10 hours | 6–12 hours |
-| Best For | Offices, gaming | Students, business | Reading, browsing |
+**Portability**
+- Desktop: Not portable — fixed in one place
+- Laptop: Highly portable
+- Tablet: Extremely portable
+
+**Power**
+- Desktop: Highest
+- Laptop: Moderate to high
+- Tablet: Lowest
+
+**Upgradeability**
+- Desktop: Easy — you can swap parts
+- Laptop: Limited
+- Tablet: Very limited
+
+**Screen Size**
+- Desktop: 19" to 32" typical
+- Laptop: 11" to 17"
+- Tablet: 7" to 13"
+
+**Battery**
+- Desktop: None — uses mains power
+- Laptop: 3 to 10 hours
+- Tablet: 6 to 12 hours
+
+**Best For**
+- Desktop: Offices, gaming, design work
+- Laptop: Students, business
+- Tablet: Reading, browsing, media
+
+**Input Method**
+- Desktop: Keyboard and mouse
+- Laptop: Built-in keyboard and touchpad
+- Tablet: Touchscreen
+
+### Is a Phone a Computer?
+
+**Yes.** A modern smartphone is a full computer — just smaller.
+
+**It has all four functions of a computer:**
+
+- Input: touchscreen, microphone, camera, fingerprint reader
+- Processing: multi-core processor (Snapdragon, Apple A-series, MediaTek)
+- Output: screen, speakers, vibration
+- Storage: internal storage and memory cards
+
+**What a smartphone has that a desktop does not:**
+
+- Built-in phone calls and SMS
+- Built-in camera and GPS
+- Long battery life (all day without a wall socket)
+- Fits in your pocket
+
+**What a desktop has that a smartphone does not:**
+
+- Much larger screen
+- More powerful processor
+- Easier to upgrade
+- Better for heavy work (video editing, gaming, programming)
+
+**Quick smartphone facts:**
+
+- Best for: calls, messaging, social media, photos, mobile banking, reading, light work
+- Screen size: 5" to 7"
+- Battery: 8 to 15 hours
+- Storage: 64 GB to 1 TB
+- Input method: touchscreen, voice
+
+**Key point:** When you use your phone to read this book, you are using a computer — and a powerful one.
 
 ### By Purpose
 
-- **General-Purpose:** Can do many tasks (PCs, laptops).
-- **Special-Purpose (Embedded):** Built for one task only — ATM machines, POS terminals, washing machines, car computers.
+**General-Purpose**
+- Can do many different tasks
+- Examples: PCs, laptops, smartphones, tablets
+
+**Special-Purpose (Embedded)**
+- Built for one task only
+- Examples: ATM machines, POS terminals, washing machines, car computers
 
 ---
 
 ## 1.4 Real-World Applications of Computers
 
-- **Schools:** CBT examinations, e-learning, student records, research.
-- **Offices:** Typing documents, spreadsheets, email, payroll, video conferencing.
-- **Homes:** Entertainment, online banking, social media, streaming.
-- **Hospitals:** Patient records, X-ray imaging, diagnostic machines.
-- **Banks:** ATM networks, mobile banking, fraud detection, interbank transfers.
-- **Government:** BVN registration, INEC voter database, tax systems, NYSC portal.
-- **Business:** POS payments, online stores, inventory, digital marketing.
-- **Transport:** Flight booking, GPS navigation, ride-hailing.
-- **Media:** Nollywood editing, music production, radio automation.
+**Schools**
+- CBT examinations
+- E-learning
+- Student records
+- Research
+- PowerPoint lessons
+
+**Offices**
+- Typing documents
+- Spreadsheets
+- Email
+- Payroll
+- Video conferencing
+
+**Homes**
+- Entertainment
+- Online banking
+- Social media
+- Streaming
+- Smart-home control
+
+**Hospitals**
+- Patient records
+- X-ray imaging
+- Diagnostic machines
+- Drug inventory
+
+**Banks**
+- ATM networks
+- Mobile banking
+- Fraud detection
+- Interbank transfers (NIBSS, NIP)
+
+**Government**
+- BVN registration
+- INEC voter database
+- Tax systems
+- NYSC portal
+
+**Business and Commerce**
+- POS payments
+- Online stores (Jumia, Konga)
+- Inventory
+- Digital marketing
+
+**Transport**
+- Flight booking
+- GPS navigation
+- Ride-hailing (Uber, Bolt)
+
+**Media and Entertainment**
+- Nollywood editing
+- Music production
+- Radio automation
 
 ---
 
@@ -122,6 +238,6 @@ D) A mainframe
 
 **3. B** — Garbage In, Garbage Out: wrong input always produces wrong output.
 
-**4. C** — Supercomputers handle the most complex calculations.
+**4. C** — Supercomputers handle the most complex calculations, including weather and space simulation.
 
-**5. B** — A POS does one specialised job, so it is a special-purpose computer.
+**5. B** — A POS does one specialised job (process payments), so it is a special-purpose computer.
