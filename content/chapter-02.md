@@ -12,12 +12,21 @@ Compare with **software**: software is the invisible set of instructions that te
 
 All computer hardware falls into four categories based on its function:
 
-| Group | Purpose | Examples |
-|---|---|---|
-| **Input Devices** | Send data into the computer | Keyboard, mouse, scanner, microphone, webcam, joystick |
-| **Output Devices** | Present information from the computer | Monitor, printer, speaker, projector |
-| **Processing Unit (CPU)** | Process all data and instructions | Central Processing Unit (with CU + ALU + Registers) |
-| **Storage Devices** | Save data permanently or temporarily | HDD, SSD, USB flash, SD card, CD/DVD |
+**Input Devices**
+- Purpose: Send data into the computer
+- Examples: Keyboard, mouse, scanner, microphone, webcam, joystick, light pen
+
+**Output Devices**
+- Purpose: Present information from the computer
+- Examples: Monitor, printer, speaker, projector, plotter, headphone
+
+**Processing Unit (CPU)**
+- Purpose: Process all data and instructions
+- Examples: Central Processing Unit (with CU + ALU + Registers)
+
+**Storage Devices**
+- Purpose: Save data permanently or temporarily
+- Examples: HDD, SSD, USB flash, SD card, CD/DVD
 
 ---
 
@@ -27,41 +36,41 @@ The **CPU** is often called **"the brain of the computer."** It is a small silic
 
 ### The Three Parts of the CPU
 
-1. **Control Unit (CU)** — The manager. It fetches instructions from memory, decodes them, and directs all other parts to carry them out. The CU does not do calculations itself; it controls.
+**1. Control Unit (CU)**
+- The manager
+- It fetches instructions from memory, decodes them, and directs all other parts to carry them out
+- The CU does not do calculations itself; it controls
 
-2. **Arithmetic Logic Unit (ALU)** — The calculator. It performs:
-   - **Arithmetic operations:** +, −, ×, ÷
-   - **Logical operations:** comparisons (>, <, =), AND, OR, NOT
+**2. Arithmetic Logic Unit (ALU)**
+- The calculator
+- It performs arithmetic operations: +, −, ×, ÷
+- It performs logical operations: comparisons (>, <, =), AND, OR, NOT
 
-3. **Registers** — Tiny, ultra-fast storage locations **inside** the CPU that hold data currently being worked on. They are the fastest memory in the entire computer.
-![CPU Architecture](![CPU Architecture](https://ict-master.onrender.com/images/1790430034869.png))
-┌───────────────────────────────────────┐
-│        CENTRAL PROCESSING UNIT        │
-│              (CPU)                    │
-│                                       │
-│   ┌──────────────┐   ┌────────────┐  │
-│   │   CONTROL    │   │ ARITHMETIC │  │
-│   │    UNIT      │──▶│  &  LOGIC  │  │
-│   │    (CU)      │   │  UNIT(ALU) │  │
-│   └──────┬───────┘   └─────┬──────┘  │
-│          │                 │         │
-│          ▼                 ▼         │
-│   ┌─────────────────────────────┐    │
-│   │      REGISTERS              │    │
-│   └─────────────────────────────┘    │
-└───────────────┬───────────────────────┘
-                ▼
-      ┌──────────────────┐
-      │   MAIN MEMORY    │
-      │      (RAM)       │
-      └──────────────────┘
+**3. Registers**
+- Tiny, ultra-fast storage locations **inside** the CPU
+- They hold data currently being worked on
+- They are the fastest memory in the entire computer
+
+### CPU Architecture Diagram
+
+![CPU Architecture](https://ict-master.onrender.com/images/1790430034869.png)
+
 **Real-world analogy:** The CU is a school principal issuing instructions. The ALU is the mathematics teacher solving problems. The Registers are the teacher's desk — the fastest place to keep a paper you're working on right now.
 
 ### Factors That Determine CPU Power
 
-- **Clock Speed** — Measured in GHz (gigahertz). Higher = faster.
-- **Number of Cores** — Dual-core (2), Quad-core (4), Octa-core (8). More cores = more tasks at once.
-- **Cache Size** — Small, fast memory inside the CPU. Bigger cache = better performance.
+**Clock Speed**
+- Measured in GHz (gigahertz)
+- Higher = faster
+- Example: 3.2 GHz is faster than 2.4 GHz
+
+**Number of Cores**
+- Dual-core (2), Quad-core (4), Octa-core (8)
+- More cores = more tasks handled at once
+
+**Cache Size**
+- Small, fast memory inside the CPU
+- Bigger cache = better performance
 
 ---
 
@@ -70,16 +79,41 @@ The **CPU** is often called **"the brain of the computer."** It is a small silic
 **Peripherals** are any device connected to the computer to add functionality. They are grouped into four:
 
 ### (a) Input Peripherals
-Keyboard, Mouse, Scanner, Microphone, Webcam, Joystick, Light Pen, Barcode Reader, OMR / OCR / MICR.
+
+- **Keyboard** — Typing text and commands
+- **Mouse** — Pointing and clicking
+- **Scanner** — Converts paper documents into digital files
+- **Microphone** — Inputs sound
+- **Webcam** — Inputs video
+- **Joystick / Gamepad** — For games
+- **Light Pen** — For drawing directly on screen
+- **Barcode Reader** — Used in supermarkets
+- **OMR / OCR / MICR** — For exam sheets, text scanning, and cheque reading in banks
 
 ### (b) Output Peripherals
-Monitor (CRT, LCD, LED, OLED), Printer (Inkjet, Laser, Dot-matrix, Thermal), Speaker, Projector, Plotter, Headphones.
+
+- **Monitor (VDU)** — Displays visual output. Types: CRT (old), LCD, LED, OLED
+- **Printer** — Produces hard copy. Types: Inkjet, Laser, Dot-matrix, Thermal
+- **Speaker** — Sound output
+- **Projector** — Displays on a large screen or wall
+- **Plotter** — Prints large engineering drawings and maps
+- **Headphones** — Personal audio output
 
 ### (c) Storage Peripherals
-External hard drive, USB flash drive, SD card, CD/DVD, external SSD.
+
+- External hard drive
+- USB flash drive
+- SD card
+- CD/DVD
+- External SSD
 
 ### (d) Communication Peripherals
-Modem, Router, Network Interface Card (NIC), Bluetooth adapter, Wi-Fi dongle.
+
+- Modem
+- Router
+- Network Interface Card (NIC)
+- Bluetooth adapter
+- Wi-Fi dongle
 
 ---
 
