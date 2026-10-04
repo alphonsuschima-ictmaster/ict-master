@@ -198,46 +198,135 @@ Every computer, no matter how big or small, performs exactly **four functions**:
 
 ---
 
-## 1.5 End-of-Module Quiz
+## 1.5 Interactive Quiz — Module 1
 
-**1. What is the correct order of the four core functions of a computer?**
+:::quiz
+Question 1: What is the correct order of the four core functions of a computer?
 A) Output → Input → Storage → Processing
 B) Input → Processing → Output → Storage
 C) Storage → Input → Output → Processing
 D) Processing → Storage → Input → Output
+Answer: B
+Explanation: Data enters as input, is transformed by processing, is presented as output, then saved in storage.
 
-**2. Which of the following is NOT a characteristic of a computer?**
+Question 2: Which of the following is NOT a characteristic of a computer?
 A) Speed
 B) Accuracy
 C) Emotion
 D) Diligence
+Answer: C
+Explanation: Computers have no emotions. Speed, accuracy, and diligence are all genuine characteristics.
 
-**3. The term GIGO in computing stands for:**
+Question 3: The term GIGO in computing stands for:
 A) General Input General Output
 B) Garbage In Garbage Out
 C) Gigabyte In Gigabyte Out
 D) Graphic Interface Graphic Output
+Answer: B
+Explanation: Garbage In, Garbage Out — wrong input always produces wrong output.
 
-**4. Which type of computer is used in weather forecasting and space research?**
+Question 4: Which type of computer is used in weather forecasting and space research?
 A) Mainframe
 B) Mini computer
 C) Supercomputer
 D) Microcomputer
+Answer: C
+Explanation: Supercomputers handle the most complex calculations, including weather and space simulation.
 
-**5. A POS terminal in a supermarket is best described as:**
+Question 5: A POS terminal in a supermarket is best described as:
 A) A general-purpose computer
 B) A special-purpose (embedded) computer
 C) A supercomputer
 D) A mainframe
+Answer: B
+Explanation: A POS does one specialised job (process payments), so it is a special-purpose computer.
 
-### ANSWER KEY
+Question 6: What is the raw, unorganised fact that a computer accepts called?
+A) Information
+B) Data
+C) Program
+D) Output
+Answer: B
+Explanation: Data is raw, unorganised facts. When processed, it becomes information.
 
-**1. B** — Data enters as input, is transformed by processing, is presented as output, then saved in storage.
+Question 7: Which of these is a limitation of a computer?
+A) It can calculate very fast
+B) It never gets tired
+C) It has no emotions
+D) It can store large amounts of data
+Answer: C
+Explanation: A computer has no emotions, no judgment, and no common sense. This is a limitation.
 
-**2. C** — Computers have no emotions. Speed, accuracy, and diligence are all genuine characteristics.
+Question 8: Which of the following devices is a computer?
+A) A calculator
+B) A smartphone
+C) A wristwatch
+D) All of the above
+Answer: D
+Explanation: A modern calculator, smartphone, and even a smartwatch all process data and perform the four functions of a computer.
 
-**3. B** — Garbage In, Garbage Out: wrong input always produces wrong output.
+Question 9: The computer's four core functions in order are:
+A) Input, Output, Processing, Storage
+B) Input, Processing, Output, Storage
+C) Storage, Processing, Output, Input
+D) Processing, Input, Storage, Output
+Answer: B
+Explanation: The correct order is: Input → Processing → Output → Storage.
 
-**4. C** — Supercomputers handle the most complex calculations, including weather and space simulation.
+Question 10: Which of these is NOT a general-purpose computer?
+A) A desktop PC
+B) A laptop
+C) A smartphone
+D) An ATM machine
+Answer: D
+Explanation: An ATM is a special-purpose (embedded) computer — it is built for one task only: banking transactions.
+:::
 
-**5. B** — A POS does one specialised job (process payments), so it is a special-purpose computer.
+---
+
+## After You Paste Both Files
+
+**1.** Wait 1–2 minutes for Render to auto-deploy
+
+**2.** Open the app in Incognito
+
+**3.** Tap **Read Now** on Module 1
+
+**4.** Scroll to the bottom of Chapter 1
+
+**5.** **You should see:**
+
+> **Interactive Quiz — Module 1**
+>
+> **Question 1 of 10**
+>
+> What is the correct order of the four core functions of a computer?
+>
+> ◯ A) Output → Input → Storage → Processing
+> ◯ B) Input → Processing → Output → Storage
+> ◯ C) Storage → Input → Output → Processing
+> ◯ D) Processing → Storage → Input → Output
+>
+> **[ ← Previous ] [ Next → ]**
+
+**6.** Tap an option → tap **Next** → continue through all 10 questions
+
+**7.** After question 10 → tap **Finish Quiz →**
+
+**8.** **You should see:**
+
+> **Your Score**
+> **8 / 10**
+>
+> Good! Keep practising.
+>
+> **[ 🔄 Retake Quiz ]**
+>
+> **Review Your Answers**
+> *(every question with your answer, the correct answer, and explanation)*
+
+**9.** Tap **Retake Quiz** → the quiz restarts
+
+---
+
+## Reply With
