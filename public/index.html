@@ -495,4 +495,162 @@ function renderQuizQuestion(quizId) {
   const nextBtn = container.querySelector('.quiz-next');
 
   prevBtn.disabled = state.current === 0;
-  nextBtn.textContent = state.current
+  nextBtn.textContent = state.current === questions.length - 1 ? 'Finish Quiz →' : 'Next →';
+  nextBtn.disabled = !state.answers[state.current];
+}
+
+function quizSelect(quizId, qIndex, letter) {
+  const container = document.getElementById(quizId);
+  if (!container || !container._state) return;
+  container._state.answers[qIndex] = letter;
+  renderQuizQuestion(quizId);
+}
+
+function quizPrev(quizId) {
+  const container = document.getElementById(quizId);
+  if (!container || !container._state) return;
+  if (container._state.current > 0) {
+    container._state.current--;
+    renderQuizQuestion(quizId);
+  }
+}
+
+function quizNext(quizId) {
+  const container = document.getElementById(quizId);
+  if (!container || !container._state) return;
+  const questions = window['QUIZ_DATA_' + quizId];
+  const state = container._state;
+
+  if (state.current < questions.length - 1) {
+    state.current++;
+    renderQuizQuestion(quizId);
+  } else {
+    showQuizResults(quizId);
+  }
+}
+
+function showQuizResults(quizId) {
+  const container = document.getElementById(quizId);
+  if (!container || !container._state) return;
+  const questions = window['QUIZ_DATA_' + quizId];
+  const state = container._state;
+
+  let score = 0;
+  questions.forEach(function(q, i) {
+    if (state.answers[i] === q.answer) score++;
+  });
+
+  const pct = Math.round((score / questions.length) * 100);
+  let msgClass = '', msgText = '';
+  if (pct >= 90) { msgClass = 'excellent'; msgText = 'Excellent! You are exam-ready.'; }
+  else if (pct >= 70) { msgClass = 'good'; msgText = 'Good! Keep practising.'; }
+  else if (pct >= 50) { msgClass = 'fair'; msgText = 'Fair. Review the chapter and try again.'; }
+  else { msgClass = 'poor'; msgText = 'Keep studying. Read the chapter again.'; }
+
+  let reviewHtml = '<div style="margin-top:24px;"><h3 style="color:#1e3a8a;margin-bottom:12px;">Review Your Answers</h3>';
+  questions.forEach(function(q, i) {
+    const userAns = state.answers[i];
+    const isCorrect = userAns === q.answer;
+    reviewHtml += '<div class="quiz-review-item ' + (isCorrect ? 'correct-item' : 'wrong-item') + '">' +
+      '<div class="q">' + (i + 1) + '. ' + escapeHtml(q.q) + '</div>' +
+      '<div class="a">Your answer: <strong>' + (userAns || 'Not answered') + '</strong>' + (isCorrect ? ' ✅' : ' ❌') + '</div>' +
+      (isCorrect ? '' : '<div class="a">Correct answer: <strong>' + q.answer + '</strong></div>') +
+      (q.explanation ? '<div class="explanation">' + escapeHtml(q.explanation) + '</div>' : '') +
+    '</div>';
+  });
+  reviewHtml += '</div>';
+
+  container.innerHTML =
+    '<div class="quiz-result">' +
+      '<div style="font-size:14px;color:#6b7280;">Your Score</div>' +
+      '<div class="score">' + score + ' / ' + questions.length + '</div>' +
+      '<div class="msg ' + msgClass + '">' + msgText + '</div>' +
+      '<button class="retake" onclick="retakeQuiz(\'' + quizId + '\')">🔄 Retake Quiz</button>' +
+    '</div>' +
+    reviewHtml;
+}
+
+function retakeQuiz(quizId) {
+  const container = document.getElementById(quizId);
+  if (!container) return;
+  const questions = window['QUIZ_DATA_' + quizId];
+  container.innerHTML =
+    '<div class="quiz-progress">Question <span class="quiz-current">1</span> of ' + questions.length + '</div>' +
+    '<div class="quiz-progress-bar"><div class="quiz-progress-bar-fill" style="width:' + (100 / questions.length) + '%"></div></div>' +
+    '<div class="quiz-question"></div>' +
+    '<div class="quiz-options"></div>' +
+    '<div class="quiz-nav">' +
+      '<button class="secondary quiz-prev" onclick="quizPrev(\'' + quizId + '\')">← Previous</button>' +
+      '<button class="primary quiz-next" onclick="quizNext(\'' + quizId + '\')">Next →</button>' +
+    '</div>';
+  initQuiz(quizId);
+}
+
+// Auto-initialize all quizzes after DOM is ready
+function initAllQuizzes() {
+  document.querySelectorAll('.quiz-container').forEach(function(el) {
+    const id = el.getAttribute('data-quiz-id');
+    if (id) initQuiz(id);
+  });
+}
+
+/* ═══════════════════════════════════════════ */
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+document.addEventListener('click', function(e) {
+  if (e.target.tagName === 'IMG' && e.target.closest('.reader-content')) {
+    var overlay = document.getElementById('imageOverlay');
+    var existingImg = overlay.querySelector('img');
+    if (existingImg) existingImg.remove();
+    var bigImg = document.createElement('img');
+    bigImg.src = e.target.src;
+    overlay.appendChild(bigImg);
+    overlay.classList.add('active');
+  }
+});
+
+// Override showReader to init quizzes after content loads
+const _origShowReader = showReader;
+showReader = function(n, title, markdown) {
+  _origShowReader(n, title, markdown);
+  setTimeout(initAllQuizzes, 50);
+};
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.getElementById('reader').addEventListener('touchstart', function(e) {
+  touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+document.getElementById('reader').addEventListener('touchend', function(e) {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+}, { passive: true });
+
+function handleSwipe() {
+  const diff = touchStartX - touchEndX;
+  if (Math.abs(diff) < 100) return;
+  if (diff > 0) { goToChapter(currentChapter + 1); }
+  else { goToChapter(currentChapter - 1); }
+}
+
+const params = new URLSearchParams(window.location.search);
+if (params.get('ref')) {
+  fetch(API_BASE + '/api/verify/' + params.get('ref'))
+    .then(function(r) { return r.json(); })
+    .then(function(d) { if (d.paid) alert('Payment received! Check your email/SMS for the PIN.'); })
+    .catch(function() {});
+}
+
+loadApp();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(function() {});
+}
+</script>
+</body>
+</html>
