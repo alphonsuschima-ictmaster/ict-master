@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#1e3a8a">
 <title>ICT Master Guide</title>
 <link rel="manifest" href="/manifest.json">
@@ -36,24 +36,28 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
 .modal-box .whatsapp-btn { display:block; margin-top:12px; background:#25d366; color:#fff; text-align:center; padding:12px; border-radius:10px; text-decoration:none; font-weight:600; }
 .reader { position:fixed; inset:0; background:#fff; z-index:200; display:none; overflow-y:auto; }
 .reader.active { display:block; }
-.reader-bar { position:sticky; top:0; background:#1e3a8a; color:#fff; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; }
+.reader-bar { position:sticky; top:0; background:#1e3a8a; color:#fff; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; z-index:10; }
 .reader-bar button { background:transparent; color:#fff; border:none; font-size:16px; cursor:pointer; }
 .reader-content { padding:20px; max-width:680px; margin:auto; font-size:16px; line-height:1.7; }
 .reader-content h1 { color:#1e3a8a; margin:20px 0 14px; font-size:22px; }
 .reader-content h2 { color:#1e3a8a; margin:18px 0 10px; font-size:19px; }
 .reader-content h3 { color:#1e40af; margin:14px 0 8px; font-size:17px; }
 .reader-content p { margin-bottom:12px; }
-.reader-content pre { background:#1e293b; color:#e2e8f0; padding:14px; border-radius:8px; overflow-x:auto; font-size:12px; line-height:1.4; margin:12px 0; }
+.reader-content pre { background:#1e293b; color:#e2e8f0; padding:14px; border-radius:8px; overflow-x:auto; font-size:12px; line-height:1.4; margin:12px 0; white-space:pre; }
 .reader-content table { width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; }
 .reader-content th, .reader-content td { border:1px solid #e5e7eb; padding:8px; text-align:left; }
 .reader-content th { background:#f3f4f6; font-weight:700; }
 .reader-content ul, .reader-content ol { margin:10px 0 14px 22px; }
 .reader-content li { margin-bottom:6px; }
-.reader-content img { display:block; width:100%; max-width:100%; height:auto; border-radius:8px; margin:16px 0;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); object-fit:contain; }
+.reader-content img { display:block; width:100%; max-width:100%; height:auto; border-radius:8px; margin:16px 0; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); object-fit:contain; cursor:zoom-in; }
 .spinner { display:inline-block; width:16px; height:16px; border:2px solid #e5e7eb; border-top-color:#1e3a8a; border-radius:50%; animation:spin 0.7s linear infinite; }
 @keyframes spin { to { transform:rotate(360deg); } }
 .footer { text-align:center; padding:24px; color:#94a3b8; font-size:12px; }
 .error-box { background:#fee2e2; color:#991b1b; padding:16px; border-radius:10px; margin:14px 0; font-size:13px; line-height:1.6; word-break:break-word; }
+#imageOverlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:9999; align-items:center; justify-content:center; padding:10px; cursor:zoom-out; }
+#imageOverlay.active { display:flex; }
+#imageOverlay img { max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; border-radius:6px; }
+#imageOverlay .closeHint { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); color:#fff; font-size:13px; opacity:0.7; background:rgba(0,0,0,0.5); padding:6px 14px; border-radius:20px; }
 </style>
 </head>
 <body>
@@ -102,9 +106,14 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
   <div class="reader-content" id="readerContent"></div>
 </div>
 
+<div id="imageOverlay" onclick="this.classList.remove('active')">
+  <span class="closeHint">Tap anywhere to close</span>
+</div>
+
 <script>
 const API_BASE = '';
 const SUPPORT = '2347073519187';
+
 function getDeviceId() {
   let id = localStorage.getItem('device_id');
   if (!id) {
@@ -113,7 +122,9 @@ function getDeviceId() {
   }
   return id;
 }
+
 function getToken() { return localStorage.getItem('token'); }
+
 async function loadApp() {
   const app = document.getElementById('app');
   try {
@@ -132,26 +143,33 @@ async function loadApp() {
     app.innerHTML = '<div class="error-box"><strong>Could not load the app.</strong><br><br>' + msg + '<br><br>Please refresh the page. If this continues, contact support on WhatsApp.</div>';
   }
 }
+
 function renderApp(data) {
   const app = document.getElementById('app');
   let html = '';
+
   if (!getToken()) {
     html += '<div class="buy-banner"><h2>Unlock All 10 Modules</h2><div class="price">₦1,200</div><p style="font-size:13px;opacity:0.95;margin-bottom:12px;">One-time payment · Instant access</p><button onclick="openBuyModal()">Buy Now</button></div><div style="text-align:center;margin-bottom:18px;"><button onclick="openPinModal()" style="background:none;border:none;color:#1e3a8a;text-decoration:underline;font-size:14px;cursor:pointer;">Already paid? Enter your PIN</button></div>';
   }
+
   data.chapters.forEach(function(ch) {
     html += '<div class="chapter-card"><h3>Module ' + ch.n + ': ' + ch.title.replace(/^MODULE \d+:\s*/,'') + '</h3><p>Free Preview</p><button class="btn" onclick="openFreeChapter(' + ch.n + ')">Read Now</button></div>';
   });
+
   data.locked.forEach(function(n) {
     const unlocked = !!getToken();
     html += '<div class="chapter-card locked"><h3>Module ' + n + ' 🔒</h3><p>' + (unlocked ? 'Tap to read' : 'Locked — purchase to unlock') + '</p><button class="btn" ' + (unlocked ? 'onclick="openPaidChapter(' + n + ')"' : 'onclick="openBuyModal()"') + '>' + (unlocked ? 'Read Now' : '🔒 Locked') + '</button></div>';
   });
+
   html += '<div class="footer">© ICT Master Guide<br>Support: <a href="https://wa.me/' + SUPPORT + '" style="color:#3b82f6;">WhatsApp</a></div>';
   app.innerHTML = html;
 }
+
 function openBuyModal() { document.getElementById('buyModal').classList.add('active'); }
 function closeBuyModal() { document.getElementById('buyModal').classList.remove('active'); }
 function openPinModal() { document.getElementById('pinModal').classList.add('active'); }
 function closePinModal() { document.getElementById('pinModal').classList.remove('active'); }
+
 async function startCheckout() {
   const email = document.getElementById('buyEmail').value.trim();
   const phone = document.getElementById('buyPhone').value.trim();
@@ -169,6 +187,7 @@ async function startCheckout() {
     else { msg.textContent = 'Could not start payment. Try again.'; }
   } catch (e) { msg.textContent = 'Network error. Please try again.'; }
 }
+
 async function redeemPin() {
   const pin = document.getElementById('pinInput').value.trim();
   const msg = document.getElementById('pinMsg');
@@ -195,6 +214,7 @@ async function redeemPin() {
     msg.textContent = data.error === 'invalid_pin' ? 'Wrong PIN.' : data.error === 'too_many_tries' ? 'Too many attempts. Try later.' : 'Could not unlock. Try again.';
   } catch (e) { msg.textContent = 'Network error.'; }
 }
+
 async function openFreeChapter(n) {
   try {
     const res = await fetch(API_BASE + '/api/preview');
@@ -203,6 +223,7 @@ async function openFreeChapter(n) {
     if (ch) showReader('Module ' + n, ch.body);
   } catch (e) { alert('Could not load chapter. Please refresh.'); }
 }
+
 async function openPaidChapter(n) {
   const token = getToken();
   if (!token) { openBuyModal(); return; }
@@ -225,13 +246,16 @@ async function openPaidChapter(n) {
     showReader('Module ' + n, text);
   } catch (e) { closeReader(); alert('Network error. Cannot load chapter.'); }
 }
+
 function showReader(title, markdown) {
   document.getElementById('readerTitle').textContent = title;
   document.getElementById('readerContent').innerHTML = renderMarkdown(markdown);
   document.getElementById('reader').classList.add('active');
   document.getElementById('reader').scrollTop = 0;
 }
+
 function closeReader() { document.getElementById('reader').classList.remove('active'); }
+
 function renderMarkdown(md) {
   md = md.replace(/\u200B/g, '');
   let html = md
@@ -253,9 +277,23 @@ function renderMarkdown(md) {
   }).join('');
   return html;
 }
+
 function escapeHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
+
+document.addEventListener('click', function(e) {
+  if (e.target.tagName === 'IMG' && e.target.closest('.reader-content')) {
+    var overlay = document.getElementById('imageOverlay');
+    var existingImg = overlay.querySelector('img');
+    if (existingImg) existingImg.remove();
+    var bigImg = document.createElement('img');
+    bigImg.src = e.target.src;
+    overlay.appendChild(bigImg);
+    overlay.classList.add('active');
+  }
+});
+
 const params = new URLSearchParams(window.location.search);
 if (params.get('ref')) {
   fetch(API_BASE + '/api/verify/' + params.get('ref'))
@@ -263,7 +301,9 @@ if (params.get('ref')) {
     .then(function(d) { if (d.paid) alert('Payment received! Check your email/SMS for the PIN.'); })
     .catch(function() {});
 }
+
 loadApp();
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(function() {});
 }
