@@ -37,13 +37,13 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
 .reader { position:fixed; inset:0; background:#fff; z-index:200; display:none; overflow-y:auto; }
 .reader.active { display:block; }
 .reader-bar { position:sticky; top:0; background:#1e3a8a; color:#fff; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; z-index:10; }
-.reader-bar button { background:transparent; color:#fff; border:none; font-size:16px; cursor:pointer; }
+.reader-bar button { background:transparent; color:#fff; border:none; font-size:16px; cursor:pointer; padding:6px 10px; }
 .reader-content { padding:20px; max-width:680px; margin:auto; font-size:16px; line-height:1.7; }
 .reader-content h1 { color:#1e3a8a; margin:20px 0 14px; font-size:22px; }
 .reader-content h2 { color:#1e3a8a; margin:18px 0 10px; font-size:19px; }
 .reader-content h3 { color:#1e40af; margin:14px 0 8px; font-size:17px; }
 .reader-content p { margin-bottom:12px; }
-.reader-content pre { background:#1e293b; color:#e2e8f0; padding:14px; border-radius:8px; overflow-x:auto; font-size:12px; line-height:1.4; margin:12px 0; white-space:pre; }
+.reader-content pre { background:#0f172a; color:#e2e8f0; padding:14px; border-radius:8px; margin:14px 0; font-family:'Courier New','Lucida Console','DejaVu Sans Mono',monospace; font-size:10px; line-height:1.15; letter-spacing:0; overflow-x:auto; white-space:pre; word-break:normal; overflow-wrap:normal; -webkit-overflow-scrolling:touch; }
 .reader-content table { width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; }
 .reader-content th, .reader-content td { border:1px solid #e5e7eb; padding:8px; text-align:left; }
 .reader-content th { background:#f3f4f6; font-weight:700; }
@@ -58,6 +58,10 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
 #imageOverlay.active { display:flex; }
 #imageOverlay img { max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; border-radius:6px; }
 #imageOverlay .closeHint { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); color:#fff; font-size:13px; opacity:0.7; background:rgba(0,0,0,0.5); padding:6px 14px; border-radius:20px; }
+.chapter-nav { display:flex; justify-content:space-between; align-items:center; padding:20px 16px; max-width:680px; margin:20px auto; gap:12px; }
+.chapter-nav button { flex:1; padding:14px; border:none; border-radius:10px; background:#1e3a8a; color:#fff; font-size:14px; font-weight:600; cursor:pointer; }
+.chapter-nav button:disabled { background:#cbd5e1; color:#94a3b8; cursor:not-allowed; }
+.chapter-nav .hint { font-size:12px; color:#94a3b8; text-align:center; flex:0 0 auto; }
 </style>
 </head>
 <body>
@@ -104,6 +108,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
     <span style="width:60px;"></span>
   </div>
   <div class="reader-content" id="readerContent"></div>
+  <div class="chapter-nav" id="chapterNav"></div>
 </div>
 
 <div id="imageOverlay" onclick="this.classList.remove('active')">
@@ -113,6 +118,8 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
 <script>
 const API_BASE = '';
 const SUPPORT = '2347073519187';
+let currentChapter = 0;
+let totalChapters = 10;
 
 function getDeviceId() {
   let id = localStorage.getItem('device_id');
@@ -147,20 +154,16 @@ async function loadApp() {
 function renderApp(data) {
   const app = document.getElementById('app');
   let html = '';
-
   if (!getToken()) {
     html += '<div class="buy-banner"><h2>Unlock All 10 Modules</h2><div class="price">₦1,200</div><p style="font-size:13px;opacity:0.95;margin-bottom:12px;">One-time payment · Instant access</p><button onclick="openBuyModal()">Buy Now</button></div><div style="text-align:center;margin-bottom:18px;"><button onclick="openPinModal()" style="background:none;border:none;color:#1e3a8a;text-decoration:underline;font-size:14px;cursor:pointer;">Already paid? Enter your PIN</button></div>';
   }
-
   data.chapters.forEach(function(ch) {
     html += '<div class="chapter-card"><h3>Module ' + ch.n + ': ' + ch.title.replace(/^MODULE \d+:\s*/,'') + '</h3><p>Free Preview</p><button class="btn" onclick="openFreeChapter(' + ch.n + ')">Read Now</button></div>';
   });
-
   data.locked.forEach(function(n) {
     const unlocked = !!getToken();
     html += '<div class="chapter-card locked"><h3>Module ' + n + ' 🔒</h3><p>' + (unlocked ? 'Tap to read' : 'Locked — purchase to unlock') + '</p><button class="btn" ' + (unlocked ? 'onclick="openPaidChapter(' + n + ')"' : 'onclick="openBuyModal()"') + '>' + (unlocked ? 'Read Now' : '🔒 Locked') + '</button></div>';
   });
-
   html += '<div class="footer">© ICT Master Guide<br>Support: <a href="https://wa.me/' + SUPPORT + '" style="color:#3b82f6;">WhatsApp</a></div>';
   app.innerHTML = html;
 }
@@ -220,7 +223,7 @@ async function openFreeChapter(n) {
     const res = await fetch(API_BASE + '/api/preview');
     const data = await res.json();
     const ch = data.chapters.find(function(c) { return c.n === n; });
-    if (ch) showReader('Module ' + n, ch.body);
+    if (ch) showReader(n, 'Module ' + n, ch.body);
   } catch (e) { alert('Could not load chapter. Please refresh.'); }
 }
 
@@ -229,7 +232,7 @@ async function openPaidChapter(n) {
   if (!token) { openBuyModal(); return; }
   const cacheKey = 'ch-' + n;
   const cached = localStorage.getItem(cacheKey);
-  if (cached) { showReader('Module ' + n, cached); return; }
+  if (cached) { showReader(n, 'Module ' + n, cached); return; }
   document.getElementById('readerContent').innerHTML = '<div style="text-align:center;padding:40px;"><span class="spinner"></span></div>';
   document.getElementById('reader').classList.add('active');
   try {
@@ -243,18 +246,40 @@ async function openPaidChapter(n) {
     }
     const text = await res.text();
     localStorage.setItem(cacheKey, text);
-    showReader('Module ' + n, text);
+    showReader(n, 'Module ' + n, text);
   } catch (e) { closeReader(); alert('Network error. Cannot load chapter.'); }
 }
 
-function showReader(title, markdown) {
+function showReader(n, title, markdown) {
+  currentChapter = n;
   document.getElementById('readerTitle').textContent = title;
   document.getElementById('readerContent').innerHTML = renderMarkdown(markdown);
   document.getElementById('reader').classList.add('active');
   document.getElementById('reader').scrollTop = 0;
+  renderChapterNav();
 }
 
-function closeReader() { document.getElementById('reader').classList.remove('active'); }
+function renderChapterNav() {
+  const nav = document.getElementById('chapterNav');
+  const prev = currentChapter > 1;
+  const next = currentChapter < totalChapters && (currentChapter < 2 || getToken());
+  let html = '';
+  html += '<button ' + (prev ? 'onclick="goToChapter(' + (currentChapter - 1) + ')"' : 'disabled') + '>← Previous</button>';
+  html += '<span class="hint">' + currentChapter + ' / ' + totalChapters + '</span>';
+  html += '<button ' + (next ? 'onclick="goToChapter(' + (currentChapter + 1) + ')"' : 'disabled') + '>Next →</button>';
+  nav.innerHTML = html;
+}
+
+function goToChapter(n) {
+  if (n < 1 || n > totalChapters) return;
+  if (n > 2 && !getToken()) { openBuyModal(); return; }
+  if (n <= 2) { openFreeChapter(n); }
+  else { openPaidChapter(n); }
+}
+
+function closeReader() {
+  document.getElementById('reader').classList.remove('active');
+}
 
 function renderMarkdown(md) {
   md = md.replace(/\u200B/g, '');
@@ -293,6 +318,25 @@ document.addEventListener('click', function(e) {
     overlay.classList.add('active');
   }
 });
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.getElementById('reader').addEventListener('touchstart', function(e) {
+  touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+document.getElementById('reader').addEventListener('touchend', function(e) {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+}, { passive: true });
+
+function handleSwipe() {
+  const diff = touchStartX - touchEndX;
+  if (Math.abs(diff) < 100) return;
+  if (diff > 0) { goToChapter(currentChapter + 1); }
+  else { goToChapter(currentChapter - 1); }
+}
 
 const params = new URLSearchParams(window.location.search);
 if (params.get('ref')) {
