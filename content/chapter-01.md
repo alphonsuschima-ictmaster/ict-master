@@ -1,284 +1,298 @@
-# MODULE 1: COMPUTER BASICS & FUNCTIONS
-
-## 1.1 What Is a Computer?
-
-A **computer** is an electronic device that accepts data (input), processes it according to a set of instructions (a program), produces meaningful information (output), and can store that information for future use.
-
-Put simply: **a computer is a machine that turns raw data into useful information.**
-
-**Data** = raw, unorganised facts. Example: `75, 80, 90, 60`
-
-**Information** = processed, meaningful data. Example: `The class average is 76%`
-
-### Key Characteristics of a Computer
-
-- **Speed:** A computer performs millions (even billions) of calculations per second. A task that would take a human one year can be done in seconds.
-- **Accuracy:** Computers do not make mistakes — errors come from wrong input or wrong instructions ("Garbage In, Garbage Out — GIGO").
-- **Diligence (Consistency):** A computer never gets tired, bored, or distracted. It performs the same task the same way, every time.
-- **Storage Capacity:** A single modern hard drive can hold millions of books, photos, and songs.
-- **Versatility:** The same computer can type a letter, play music, edit a video, and browse the internet.
-- **Automation:** Once a program is running, the computer works without human assistance.
-
-### Limitations (You Must Also Know These)
-
-- **No intelligence of its own:** A computer cannot think. It only follows instructions.
-- **No emotions:** It has no feelings, no judgment, no common sense.
-- **Depends on power:** Without electricity or battery, it cannot function.
-- **GIGO principle:** Wrong input = wrong output.
-
----
-
-## 1.2 The Four Core Functions of a Computer
-
-Every computer, no matter how big or small, performs exactly **four functions**:
-
-1. **INPUT** — Accepting data from the user or the environment.
-2. **PROCESSING** — Transforming that data into useful information.
-3. **OUTPUT** — Presenting the processed information to the user.
-4. **STORAGE** — Saving data and information for future use.
-
-### The Computer Block Diagram
-
-![Computer Block Diagram](https://ict-master.onrender.com/images/1790429997745.png)
-
-**How to remember it:** Think of a bank. Input = you filling the deposit slip. Processing = the cashier counting your money. Output = the receipt and your updated balance. Storage = the bank's records kept for later.
-
----
-
-## 1.3 Types of Computers
-
-### By Size and Power (Largest to Smallest)
-
-- **Supercomputer:** The most powerful and most expensive. Used for weather forecasting, space research, nuclear simulation.
-- **Mainframe:** Handles massive data for large organisations like banks, airlines, and government agencies.
-- **Mini Computer (Mid-range):** Sits between mainframe and micro. Used by medium-sized businesses.
-- **Microcomputer (Personal Computer — PC):** The type you use every day — desktops, laptops, tablets, smartphones.
-- **Mobile Devices:** Smartphones, smartwatches, PDAs.
-
-### Desktop vs. Laptop vs. Tablet
-
-**Portability**
-- Desktop: Not portable — fixed in one place
-- Laptop: Highly portable
-- Tablet: Extremely portable
-
-**Power**
-- Desktop: Highest
-- Laptop: Moderate to high
-- Tablet: Lowest
-
-**Upgradeability**
-- Desktop: Easy — you can swap parts
-- Laptop: Limited
-- Tablet: Very limited
-
-**Screen Size**
-- Desktop: 19" to 32" typical
-- Laptop: 11" to 17"
-- Tablet: 7" to 13"
-
-**Battery**
-- Desktop: None — uses mains power
-- Laptop: 3 to 10 hours
-- Tablet: 6 to 12 hours
-
-**Best For**
-- Desktop: Offices, gaming, design work
-- Laptop: Students, business
-- Tablet: Reading, browsing, media
-
-**Input Method**
-- Desktop: Keyboard and mouse
-- Laptop: Built-in keyboard and touchpad
-- Tablet: Touchscreen
-
-### Is a Phone a Computer?
-
-**Yes.** A modern smartphone is a full computer — just smaller.
-
-**It has all four functions of a computer:**
-
-- Input: touchscreen, microphone, camera, fingerprint reader
-- Processing: multi-core processor (Snapdragon, Apple A-series, MediaTek)
-- Output: screen, speakers, vibration
-- Storage: internal storage and memory cards
-
-**What a smartphone has that a desktop does not:**
-
-- Built-in phone calls and SMS
-- Built-in camera and GPS
-- Long battery life (all day without a wall socket)
-- Fits in your pocket
-
-**What a desktop has that a smartphone does not:**
-
-- Much larger screen
-- More powerful processor
-- Easier to upgrade
-- Better for heavy work (video editing, gaming, programming)
-
-**Quick smartphone facts:**
-
-- Best for: calls, messaging, social media, photos, mobile banking, reading, light work
-- Screen size: 5" to 7"
-- Battery: 8 to 15 hours
-- Storage: 64 GB to 1 TB
-- Input method: touchscreen, voice
-
-**Key point:** When you use your phone to read this book, you are using a computer — and a powerful one.
-
-### By Purpose
-
-**General-Purpose**
-- Can do many different tasks
-- Examples: PCs, laptops, smartphones, tablets
-
-**Special-Purpose (Embedded)**
-- Built for one task only
-- Examples: ATM machines, POS terminals, washing machines, car computers
-
----
-
-## 1.4 Real-World Applications of Computers
-
-**Schools**
-- CBT examinations
-- E-learning
-- Student records
-- Research
-- PowerPoint lessons
-
-**Offices**
-- Typing documents
-- Spreadsheets
-- Email
-- Payroll
-- Video conferencing
-
-**Homes**
-- Entertainment
-- Online banking
-- Social media
-- Streaming
-- Smart-home control
-
-**Hospitals**
-- Patient records
-- X-ray imaging
-- Diagnostic machines
-- Drug inventory
-
-**Banks**
-- ATM networks
-- Mobile banking
-- Fraud detection
-- Interbank transfers (NIBSS, NIP)
-
-**Government**
-- BVN registration
-- INEC voter database
-- Tax systems
-- NYSC portal
-
-**Business and Commerce**
-- POS payments
-- Online stores (Jumia, Konga)
-- Inventory
-- Digital marketing
-
-**Transport**
-- Flight booking
-- GPS navigation
-- Ride-hailing (Uber, Bolt)
-
-**Media and Entertainment**
-- Nollywood editing
-- Music production
-- Radio automation
-
----
-
-## 1.5 Interactive Quiz — Module 1
-
-:::quiz
-Question 1: What is the correct order of the four core functions of a computer?
-A) Output → Input → Storage → Processing
-B) Input → Processing → Output → Storage
-C) Storage → Input → Output → Processing
-D) Processing → Storage → Input → Output
-Answer: B
-Explanation: Data enters as input, is transformed by processing, is presented as output, then saved in storage.
-
-Question 2: Which of the following is NOT a characteristic of a computer?
-A) Speed
-B) Accuracy
-C) Emotion
-D) Diligence
-Answer: C
-Explanation: Computers have no emotions. Speed, accuracy, and diligence are all genuine characteristics.
-
-Question 3: The term GIGO in computing stands for:
-A) General Input General Output
-B) Garbage In Garbage Out
-C) Gigabyte In Gigabyte Out
-D) Graphic Interface Graphic Output
-Answer: B
-Explanation: Garbage In, Garbage Out — wrong input always produces wrong output.
-
-Question 4: Which type of computer is used in weather forecasting and space research?
-A) Mainframe
-B) Mini computer
-C) Supercomputer
-D) Microcomputer
-Answer: C
-Explanation: Supercomputers handle the most complex calculations, including weather and space simulation.
-
-Question 5: A POS terminal in a supermarket is best described as:
-A) A general-purpose computer
-B) A special-purpose (embedded) computer
-C) A supercomputer
-D) A mainframe
-Answer: B
-Explanation: A POS does one specialised job (process payments), so it is a special-purpose computer.
-
-Question 6: What is the raw, unorganised fact that a computer accepts called?
-A) Information
-B) Data
-C) Program
-D) Output
-Answer: B
-Explanation: Data is raw, unorganised facts. When processed, it becomes information.
-
-Question 7: Which of these is a limitation of a computer?
-A) It can calculate very fast
-B) It never gets tired
-C) It has no emotions
-D) It can store large amounts of data
-Answer: C
-Explanation: A computer has no emotions, no judgment, and no common sense. This is a limitation.
-
-Question 8: Which of the following devices is a computer?
-A) A calculator
-B) A smartphone
-C) A wristwatch
-D) All of the above
-Answer: D
-Explanation: A modern calculator, smartphone, and even a smartwatch all process data and perform the four functions of a computer.
-
-Question 9: The computer's four core functions in order are:
-A) Input, Output, Processing, Storage
-B) Input, Processing, Output, Storage
-C) Storage, Processing, Output, Input
-D) Processing, Input, Storage, Output
-Answer: B
-Explanation: The correct order is: Input → Processing → Output → Storage.
-
-Question 10: Which of these is NOT a general-purpose computer?
-A) A desktop PC
-B) A laptop
-C) A smartphone
-D) An ATM machine
-Answer: D
-Explanation: An ATM is a special-purpose (embedded) computer — it is built for one task only: banking transactions.
-:::
-
+<!-- ========================================== -->
+<!-- ICT-MASTER RESPONSIVE QUIZ SYSTEM (ALL-IN-ONE) -->
+<!-- ========================================== -->
+
+<style>
+/* Responsive Mobile-First Quiz Styling */
+.quiz-container {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 24px 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    font-family: inherit;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .quiz-container {
+        padding: 28px;
+    }
+}
+
+.quiz-header-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 6px;
+}
+
+.quiz-progress {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.quiz-question {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+/* Designed with a minimum height of 48px for easy mobile tapping */
+.quiz-option-label {
+    display: flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+    color: #334155;
+    min-height: 48px;
+    box-sizing: border-box;
+}
+
+.quiz-option-label:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+.quiz-option-label input[type="radio"] {
+    margin-right: 12px;
+    transform: scale(1.2);
+    accent-color: #2563eb;
+}
+
+.quiz-option-label.selected {
+    background: #eff6ff;
+    border-color: #2563eb;
+    color: #1d4ed8;
+    font-weight: 500;
+}
+
+.quiz-nav-btns {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.quiz-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+.quiz-btn:hover {
+    background: #1d4ed8;
+}
+
+.quiz-btn:disabled {
+    background: #e2e8f0;
+    color: #94a3b8;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.quiz-review-item {
+    margin-bottom: 16px;
+    padding: 14px;
+    border-radius: 8px;
+    background: #f8fafc;
+    border-left: 5px solid #2563eb;
+}
+
+.quiz-review-item.correct {
+    border-left-color: #16a34a;
+    background: #f0fdf4;
+}
+
+.quiz-review-item.incorrect {
+    border-left-color: #dc2626;
+    background: #fef2f2;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Locate the content body container on the page
+    const contentElement = document.querySelector(".content-body") || document.querySelector("main") || document.body;
+    if (!contentElement) return;
+    
+    let htmlContent = contentElement.innerHTML;
+    const quizRegex = /:::quiz([\s\S]*?):::/;
+    const match = htmlContent.match(quizRegex);
+
+    if (match) {
+        const quizRawText = match[1].trim();
+        const questions = parseQuizText(quizRawText);
+
+        // Replace the :::quiz placeholder block with a clean root element
+        const placeholder = '<div id="interactive-quiz-wrapper"></div>';
+        contentElement.innerHTML = htmlContent.replace(quizRegex, placeholder);
+
+        renderQuizApp(questions, document.getElementById("interactive-quiz-wrapper"));
+    }
+});
+
+function parseQuizText(text) {
+    const blocks = text.split(/Question \d+:/).filter(Boolean);
+    let questions = [];
+
+    blocks.forEach((block) => {
+        let lines = block.trim().split("\n").map(l => l.trim()).filter(Boolean);
+        let qText = lines[0];
+        let options = [];
+        let answer = "";
+        let explanation = "";
+
+        lines.slice(1).forEach((line) => {
+            if (/^[A-D]\)/.test(line)) {
+                options.push(line);
+            } else if (line.startsWith("Answer:")) {
+                answer = line.replace("Answer:", "").trim();
+            } else if (line.startsWith("Explanation:")) {
+                explanation = line.replace("Explanation:", "").trim();
+            }
+        });
+
+        questions.push({ question: qText, options, answer, explanation });
+    });
+
+    return questions;
+}
+
+function renderQuizApp(questions, root) {
+    let currentIndex = 0;
+    let userAnswers = {};
+
+    function updateUI() {
+        if (currentIndex >= questions.length) {
+            renderScoreSummary();
+            return;
+        }
+
+        let q = questions[currentIndex];
+        let optionsHtml = q.options.map(opt => {
+            let letter = opt.charAt(0);
+            let isChecked = userAnswers[currentIndex] === letter;
+            return `
+                <label class="quiz-option-label ${isChecked ? 'selected' : ''}">
+                    <input type="radio" name="quiz-q" value="${letter}" ${isChecked ? 'checked' : ''}>
+                    <span>${opt}</span>
+                </label>
+            `;
+        }).join("");
+
+        root.innerHTML = `
+            <div class="quiz-container">
+                <div class="quiz-header-title">Interactive Assessment</div>
+                <div class="quiz-progress">Question ${currentIndex + 1} of ${questions.length}</div>
+                <div class="quiz-question">${q.question}</div>
+                <div class="quiz-options">${optionsHtml}</div>
+                <div class="quiz-nav-btns">
+                    <button type="button" class="quiz-btn" id="quiz-prev-btn" ${currentIndex === 0 ? 'disabled' : ''}>← Previous</button>
+                    <button type="button" class="quiz-btn" id="quiz-next-btn">${currentIndex === questions.length - 1 ? 'Finish Quiz' : 'Next →'}</button>
+                </div>
+            </div>
+        `;
+
+        // Handle option clicks across mobile and desktop screens
+        root.querySelectorAll(".quiz-option-label").forEach((label) => {
+            label.addEventListener("click", function() {
+                root.querySelectorAll(".quiz-option-label").forEach(l => l.classList.remove("selected"));
+                this.classList.add("selected");
+                let radio = this.querySelector("input[type='radio']");
+                if (radio) {
+                    radio.checked = true;
+                    userAnswers[currentIndex] = radio.value;
+                }
+            });
+        });
+
+        // Navigation button event handlers
+        document.getElementById("quiz-prev-btn").addEventListener("click", () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateUI();
+                window.scrollTo({ top: root.offsetTop - 50, behavior: 'smooth' });
+            }
+        });
+
+        document.getElementById("quiz-next-btn").addEventListener("click", () => {
+            currentIndex++;
+            updateUI();
+            window.scrollTo({ top: root.offsetTop - 50, behavior: 'smooth' });
+        });
+    }
+
+    function renderScoreSummary() {
+        let score = 0;
+        questions.forEach((q, idx) => {
+            if (userAnswers[idx] === q.answer) score++;
+        });
+
+        let reviewList = questions.map((q, idx) => {
+            let userAns = userAnswers[idx] || "Not answered";
+            let isCorrect = userAns === q.answer;
+            return `
+                <div class="quiz-review-item ${isCorrect ? 'correct' : 'incorrect'}">
+                    <p><strong>Q${idx + 1}:</strong> ${q.question}</p>
+                    <p style="margin-top: 4px;">Your answer: <strong>${userAns}</strong> | Correct answer: <strong>${q.answer}</strong></p>
+                    <p style="margin-top: 6px; font-size: 0.9rem; color: #475569;"><em>${q.explanation}</em></p>
+                </div>
+            `;
+        }).join("");
+
+        root.innerHTML = `
+            <div class="quiz-container" style="text-align: center;">
+                <h2 style="color: #1e293b; margin-bottom: 8px;">Quiz Completed!</h2>
+                <p style="font-size: 1.25rem; font-weight: 700; color: #2563eb; margin-bottom: 12px;">Your Score: ${score} / ${questions.length}</p>
+                <p style="color: #64748b; margin-bottom: 24px;">${score >= 7 ? 'Excellent work! You have a solid grasp of this module.' : 'Good effort! Review the detailed answers below and try again.'}</p>
+                <button type="button" class="quiz-btn" id="quiz-retake-btn" style="margin-bottom: 24px;">🔄 Retake Quiz</button>
+                <div style="text-align: left; margin-top: 20px;">
+                    <h3 style="font-size: 1.1rem; color: #1e293b; margin-bottom: 12px;">Detailed Review</h3>
+                    ${reviewList}
+                </div>
+            </div>
+        `;
+
+        document.getElementById("quiz-retake-btn").addEventListener("click", () => {
+            currentIndex = 0;
+            userAnswers = {};
+            updateUI();
+            window.scrollTo({ top: root.offsetTop - 50, behavior: 'smooth' });
+        });
+    }
+
+    updateUI();
+}
+</script>
