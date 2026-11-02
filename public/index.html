@@ -1,1 +1,539 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1e3a8a">
+<title>ICT Master Guide</title>
+<link rel="manifest" href="/manifest.json">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body { max-width:100%; overflow-x:hidden; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#f4f6fb; color:#1a1a1a; line-height:1.6; padding-bottom:80px; }
+.header { background:linear-gradient(135deg,#1e3a8a,#3b82f6); color:#fff; padding:28px 20px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+.header h1 { font-size:22px; font-weight:700; margin-bottom:6px; }
+.header p { font-size:13px; opacity:0.9; }
+.container { max-width:720px; margin:0 auto; padding:20px; }
+.chapter-card { background:#fff; border-radius:14px; padding:18px; margin-bottom:14px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+.chapter-card h3 { font-size:17px; color:#1e3a8a; margin-bottom:8px; }
+.chapter-card p { font-size:14px; color:#666; }
+.chapter-card.locked { background:#f8f9fc; border:1px dashed #cbd5e1; }
+.chapter-card .btn { display:inline-block; margin-top:10px; padding:10px 20px; border-radius:8px; background:#1e3a8a; color:#fff; text-decoration:none; font-size:14px; font-weight:600; border:none; cursor:pointer; }
+.chapter-card.locked .btn { background:#e5e7eb; color:#6b7280; }
+.buy-banner { background:linear-gradient(135deg,#f59e0b,#f97316); color:#fff; border-radius:14px; padding:22px; text-align:center; margin-bottom:20px; }
+.buy-banner h2 { font-size:19px; margin-bottom:6px; }
+.buy-banner .price { font-size:28px; font-weight:800; margin:8px 0; }
+.buy-banner button { background:#fff; color:#ea580c; border:none; padding:12px 28px; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; }
+.modal { position:fixed; inset:0; background:rgba(0,0,0,0.6); display:none; align-items:flex-start; justify-content:center; padding:20px; z-index:100; overflow-y:auto; }
+.modal.active { display:flex; }
+.modal-box { background:#fff; border-radius:16px; padding:24px; max-width:420px; width:100%; margin:auto; }
+.modal-box h3 { color:#1e3a8a; margin-bottom:8px; font-size:19px; }
+.modal-box .subtitle { font-size:13px; color:#666; margin-bottom:18px; }
+.modal-box label { display:block; font-size:13px; color:#1e3a8a; font-weight:600; margin-bottom:6px; margin-top:14px; }
+.modal-box input { width:100%; padding:14px; border:2px solid #e5e7eb; border-radius:10px; font-size:16px; background:#fff; color:#1a1a1a; font-family:inherit; }
+.modal-box input:focus { outline:none; border-color:#3b82f6; }
+.modal-box button.primary { width:100%; padding:16px; background:#1e3a8a; color:#fff; border:none; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; margin-top:20px; }
+.modal-box button.primary:disabled { background:#cbd5e1; cursor:not-allowed; }
+.modal-box button.close { width:100%; background:transparent; color:#666; border:none; padding:12px; margin-top:8px; cursor:pointer; font-size:14px; }
+.modal-box .msg { font-size:14px; color:#dc2626; margin-top:10px; min-height:20px; text-align:center; }
+.modal-box .disclaimer { font-size:11px; color:#888; margin-top:14px; line-height:1.5; text-align:center; }
+.modal-box .whatsapp-btn { display:block; margin-top:12px; background:#25d366; color:#fff; text-align:center; padding:12px; border-radius:10px; text-decoration:none; font-weight:600; }
+.reader { position:fixed; inset:0; background:#fff; z-index:200; display:none; overflow-y:auto; overflow-x:hidden; }
+.reader.active { display:block; }
+.reader-bar { position:sticky; top:0; background:#1e3a8a; color:#fff; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; z-index:10; box-shadow:0 2px 8px rgba(0,0,0,0.15); }
+.reader-bar button { background:rgba(255,255,255,0.15); color:#fff; border:none; font-size:15px; cursor:pointer; padding:8px 14px; border-radius:8px; font-weight:600; }
+.reader-content { padding:16px 20px 20px; max-width:680px; margin:auto; font-size:16px; line-height:1.7; overflow-x:hidden; word-wrap:break-word; }
+.reader-content h1:first-child, .reader-content h2:first-child, .reader-content p:first-child, .reader-content img:first-child { margin-top:0 !important; }
+.reader-content h1 { color:#1e3a8a; margin:18px 0 12px; font-size:22px; line-height:1.3; }
+.reader-content h2 { color:#1e3a8a; margin:18px 0 10px; font-size:19px; }
+.reader-content h3 { color:#1e40af; margin:14px 0 8px; font-size:17px; }
+.reader-content p { margin-bottom:12px; }
+.reader-content pre { background:#0f172a; color:#e2e8f0; padding:14px; border-radius:8px; margin:14px 0; font-family:'Courier New',monospace; font-size:9px; line-height:1.15; overflow-x:auto; white-space:pre; -webkit-overflow-scrolling:touch; max-width:100%; }
+.reader-content table { width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; }
+.reader-content th, .reader-content td { border:1px solid #e5e7eb; padding:8px; text-align:left; }
+.reader-content th { background:#f3f4f6; font-weight:700; }
+.reader-content ul, .reader-content ol { margin:10px 0 14px 22px; }
+.reader-content li { margin-bottom:6px; }
+.reader-content img { display:block; width:100% !important; max-width:100% !important; height:auto !important; max-height:62vh !important; object-fit:contain !important; border-radius:12px !important; margin:8px auto !important; padding:0 !important; background:transparent !important; box-shadow:none !important; cursor:zoom-in !important; }
+.spinner { display:inline-block; width:16px; height:16px; border:2px solid #e5e7eb; border-top-color:#1e3a8a; border-radius:50%; animation:spin 0.7s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.footer { text-align:center; padding:24px; color:#94a3b8; font-size:12px; }
+.error-box { background:#fee2e2; color:#991b1b; padding:16px; border-radius:10px; margin:14px 0; font-size:13px; line-height:1.6; word-break:break-word; }
+#imageOverlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:99999; align-items:center; justify-content:center; padding:0; cursor:zoom-out; touch-action:none; }
+#imageOverlay.active { display:flex; }
+#imageOverlay img { max-width:100vw; max-height:100vh; width:auto; height:auto; object-fit:contain; touch-action:pinch-zoom !important; }
+#imageOverlay .closeHint { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); color:#fff; font-size:13px; opacity:0.8; background:rgba(0,0,0,0.6); padding:8px 16px; border-radius:20px; }
+.chapter-nav { display:flex; justify-content:space-between; align-items:center; padding:14px 16px; max-width:680px; margin:0 auto; gap:12px; position:sticky; bottom:0; background:#ffffff; border-top:1px solid #e5e7eb; box-shadow:0 -4px 16px rgba(0,0,0,0.06); z-index:5; }
+.chapter-nav button { flex:1; padding:14px; border:none; border-radius:10px; background:#1e3a8a; color:#fff; font-size:14px; font-weight:700; cursor:pointer; }
+.chapter-nav button:disabled { background:#e5e7eb; color:#94a3b8; cursor:not-allowed; }
+.chapter-nav .hint { font-size:13px; color:#64748b; text-align:center; font-weight:600; flex:0 0 auto; min-width:60px; }
+.quiz-start-box { background:#eff6ff; border:2px solid #3b82f6; border-radius:14px; padding:22px; text-align:center; margin:24px 0; }
+.quiz-start-box h3 { color:#1e3a8a; font-size:18px; margin-bottom:8px; }
+.quiz-start-box p { color:#4b5563; font-size:14px; margin-bottom:14px; }
+.quiz-start-box button { background:#1e3a8a; color:#fff; border:none; padding:14px 28px; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; }
+.quiz-container { background:#fff; border-radius:14px; padding:20px; margin:20px 0; box-shadow:0 2px 8px rgba(0,0,0,0.06); border:1px solid #e5e7eb; }
+.quiz-progress { font-size:13px; color:#6b7280; text-align:center; margin-bottom:6px; }
+.quiz-progress-bar { height:6px; background:#e5e7eb; border-radius:3px; margin-bottom:20px; overflow:hidden; }
+.quiz-progress-bar-fill { height:100%; background:#3b82f6; transition:width 0.3s ease; }
+.quiz-question { font-size:17px; font-weight:600; color:#1e3a8a; margin-bottom:16px; line-height:1.5; }
+.quiz-option { display:block; padding:14px 16px; background:#f9fafb; border:2px solid #e5e7eb; border-radius:10px; margin-bottom:10px; cursor:pointer; font-size:15px; }
+.quiz-option.selected { background:#dbeafe; border-color:#3b82f6; }
+.quiz-option.correct { background:#d1fae5; border-color:#10b981; }
+.quiz-option.wrong { background:#fee2e2; border-color:#dc2626; }
+.quiz-nav { display:flex; justify-content:space-between; gap:12px; margin-top:20px; }
+.quiz-nav button { flex:1; padding:12px; border:none; border-radius:10px; font-size:15px; font-weight:600; cursor:pointer; }
+.quiz-nav button.primary { background:#1e3a8a; color:#fff; }
+.quiz-nav button.primary:disabled { background:#cbd5e1; cursor:not-allowed; }
+.quiz-nav button.secondary { background:#f3f4f6; color:#374151; }
+.quiz-result { text-align:center; padding:20px; }
+.quiz-result .score { font-size:48px; font-weight:800; color:#1e3a8a; margin:10px 0; }
+.quiz-result .msg { font-size:16px; color:#4b5563; margin-bottom:20px; }
+.quiz-result .msg.excellent { color:#059669; font-weight:700; }
+.quiz-result .msg.good { color:#3b82f6; font-weight:700; }
+.quiz-result .msg.fair { color:#f59e0b; font-weight:700; }
+.quiz-result .msg.poor { color:#dc2626; font-weight:700; }
+.quiz-result button { background:#1e3a8a; color:#fff; border:none; padding:14px 28px; border-radius:10px; font-size:15px; font-weight:700; cursor:pointer; margin:6px; }
+.quiz-result button.retake { background:#10b981; }
+.quiz-review-item { text-align:left; padding:14px; border:1px solid #e5e7eb; border-radius:10px; margin-bottom:10px; background:#fff; }
+.quiz-review-item.correct-item { border-left:4px solid #10b981; }
+.quiz-review-item.wrong-item { border-left:4px solid #dc2626; }
+.quiz-review-item .q { font-weight:600; margin-bottom:8px; font-size:14px; color:#111; }
+.quiz-review-item .a { font-size:13px; color:#4b5563; margin-bottom:4px; }
+.quiz-review-item .explanation { font-size:13px; color:#1e40af; margin-top:8px; padding:10px; background:#eff6ff; border-radius:6px; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Computer Appreciation & ICT Master Guide</h1>
+  <p>From First Click to CBT Champion</p>
+</div>
+<div class="container" id="app">
+  <div style="text-align:center;padding:40px;">
+    <span class="spinner"></span>
+  </div>
+</div>
+<div class="modal" id="pinModal">
+  <div class="modal-box">
+    <h3>Unlock Modules 3–10</h3>
+    <p class="subtitle">Enter the PIN we sent to your phone and email.</p>
+    <label for="pinInput">PIN Code</label>
+    <input type="tel" id="pinInput" placeholder="Enter 6-digit PIN" maxlength="6" inputmode="numeric">
+    <button class="primary" onclick="redeemPin()">Unlock Now</button>
+    <div class="msg" id="pinMsg"></div>
+    <button class="close" onclick="closePinModal()">Cancel</button>
+  </div>
+</div>
+<div class="modal" id="buyModal">
+  <div class="modal-box">
+    <h3>Buy Full Access — ₦1,200</h3>
+    <p class="subtitle">Unlock Modules 3–10. Instant delivery by SMS and email.</p>
+    <label for="buyEmail">Email Address</label>
+    <input type="email" id="buyEmail" placeholder="you@example.com" autocomplete="email">
+    <label for="buyPhone">Phone Number</label>
+    <input type="tel" id="buyPhone" placeholder="e.g. 07073519187" autocomplete="tel" inputmode="tel">
+    <button class="primary" id="payBtn" onclick="startCheckout()">Continue to Payment →</button>
+    <div class="msg" id="buyMsg"></div>
+    <p class="disclaimer">By purchasing, you agree: digital goods are non-refundable once unlocked. Please try the free preview (Modules 1 &amp; 2) first.</p>
+    <button class="close" onclick="closeBuyModal()">Cancel</button>
+  </div>
+</div>
+<div class="reader" id="reader">
+  <div class="reader-bar">
+    <button onclick="closeReader()">← Back</button>
+    <span id="readerTitle" style="font-weight:600;">Module</span>
+    <span style="width:60px;"></span>
+  </div>
+  <div class="reader-content" id="readerContent"></div>
+  <div class="chapter-nav" id="chapterNav"></div>
+</div>
+<div id="imageOverlay" onclick="closeImageOverlay()">
+  <span class="closeHint">Tap to close • Pinch to zoom</span>
+</div>
+<script>
+const API_BASE = '';
+const SUPPORT = '2347073519187';
+let currentChapter = 0;
+let totalChapters = 10;
+function getDeviceId() {
+  let id = localStorage.getItem('device_id');
+  if (!id) {
+    id = (crypto.randomUUID ? crypto.randomUUID() : 'd' + Date.now() + Math.random().toString(36).slice(2));
+    localStorage.setItem('device_id', id);
+  }
+  return id;
+}
+function getToken() { return localStorage.getItem('token'); }
+async function loadApp() {
+  const app = document.getElementById('app');
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 60000);
+    const res = await fetch(API_BASE + '/api/preview', { signal: controller.signal });
+    clearTimeout(timeoutId);
+    if (!res.ok) throw new Error('Server returned ' + res.status);
+    const data = await res.json();
+    renderApp(data);
+  } catch (e) {
+    let msg = e.message || 'Unknown error';
+    if (e.name === 'AbortError') {
+      msg = 'Server is taking too long to respond. It may be waking up. Please wait 30 seconds and refresh.';
+    }
+    app.innerHTML = '<div class="error-box"><strong>Could not load the app.</strong><br><br>' + msg + '<br><br>Please refresh the page. If this continues, contact support on WhatsApp.</div>';
+  }
+}
+function renderApp(data) {
+  const app = document.getElementById('app');
+  let html = '';
+  if (!getToken()) {
+    html += '<div class="buy-banner"><h2>Unlock All 10 Modules</h2><div class="price">₦1,200</div><p style="font-size:13px;opacity:0.95;margin-bottom:12px;">One-time payment · Instant access</p><button onclick="openBuyModal()">Buy Now</button></div><div style="text-align:center;margin-bottom:18px;"><button onclick="openPinModal()" style="background:none;border:none;color:#1e3a8a;text-decoration:underline;font-size:14px;cursor:pointer;">Already paid? Enter your PIN</button></div>';
+  }
+  data.chapters.forEach(function(ch) {
+    html += '<div class="chapter-card"><h3>Module ' + ch.n + ': ' + ch.title.replace(/^MODULE \d+:\s*/,'') + '</h3><p>Free Preview</p><button class="btn" onclick="openFreeChapter(' + ch.n + ')">Read Now</button></div>';
+  });
+  data.locked.forEach(function(n) {
+    const unlocked = !!getToken();
+    html += '<div class="chapter-card locked"><h3>Module ' + n + ' 🔒</h3><p>' + (unlocked ? 'Tap to read' : 'Locked — purchase to unlock') + '</p><button class="btn" ' + (unlocked ? 'onclick="openPaidChapter(' + n + ')"' : 'onclick="openBuyModal()"') + '>' + (unlocked ? 'Read Now' : '🔒 Locked') + '</button></div>';
+  });
+  html += '<div class="footer">© ICT Master Guide<br>Support: <a href="https://wa.me/' + SUPPORT + '" style="color:#3b82f6;">WhatsApp</a></div>';
+  app.innerHTML = html;
+}
+function openBuyModal() { document.getElementById('buyModal').classList.add('active'); }
+function closeBuyModal() { document.getElementById('buyModal').classList.remove('active'); }
+function openPinModal() { document.getElementById('pinModal').classList.add('active'); }
+function closePinModal() { document.getElementById('pinModal').classList.remove('active'); }
+async function startCheckout() {
+  const email = document.getElementById('buyEmail').value.trim();
+  const phone = document.getElementById('buyPhone').value.trim();
+  const msg = document.getElementById('buyMsg');
+  const btn = document.getElementById('payBtn');
+  if (!email) { msg.textContent = 'Please enter your email address.'; return; }
+  if (!phone) { msg.textContent = 'Please enter your phone number.'; return; }
+  if (email.indexOf('@') === -1) { msg.textContent = 'Please enter a valid email address.'; return; }
+  msg.textContent = '';
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner" style="border-top-color:#fff;"></span> Opening payment...';
+  try {
+    const res = await fetch(API_BASE + '/api/checkout', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ email, phone })
+    });
+    const data = await res.json();
+    if (data.checkout_url) {
+      window.location.href = data.checkout_url;
+    } else {
+      msg.textContent = data.error || 'Could not start payment. Please try again.';
+      btn.disabled = false;
+      btn.innerHTML = 'Continue to Payment →';
+    }
+  } catch (e) {
+    msg.textContent = 'Network error. Please try again.';
+    btn.disabled = false;
+    btn.innerHTML = 'Continue to Payment →';
+  }
+}
+async function redeemPin() {
+  const pin = document.getElementById('pinInput').value.trim();
+  const msg = document.getElementById('pinMsg');
+  if (!pin) { msg.textContent = 'Enter your PIN.'; return; }
+  msg.innerHTML = '<span class="spinner"></span>';
+  try {
+    const res = await fetch(API_BASE + '/api/unlock', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ pin, device_id: getDeviceId() })
+    });
+    const data = await res.json();
+    if (res.ok && data.token) {
+      localStorage.setItem('token', data.token);
+      closePinModal();
+      loadApp();
+      return;
+    }
+    if (data.error === 'in_use_elsewhere') {
+      const text = encodeURIComponent('Hello, I need a new PIN. My phone changed. PIN tried: ' + pin);
+      msg.innerHTML = 'This PIN is already active on another phone.<br><a class="whatsapp-btn" target="_blank" href="https://wa.me/' + SUPPORT + '?text=' + text + '">Request new PIN on WhatsApp</a>';
+      return;
+    }
+    msg.textContent = data.error === 'invalid_pin' ? 'Wrong PIN.' : data.error === 'too_many_tries' ? 'Too many attempts. Try later.' : 'Could not unlock. Try again.';
+  } catch (e) { msg.textContent = 'Network error.'; }
+}
+async function openFreeChapter(n) {
+  try {
+    const res = await fetch(API_BASE + '/api/preview');
+    const data = await res.json();
+    const ch = data.chapters.find(function(c) { return c.n === n; });
+    if (ch) showReader(n, 'Module ' + n, ch.body);
+  } catch (e) { alert('Could not load chapter. Please refresh.'); }
+}
+async function openPaidChapter(n) {
+  const token = getToken();
+  if (!token) { openBuyModal(); return; }
+  const cacheKey = 'ch-' + n;
+  const cached = localStorage.getItem(cacheKey);
+  if (cached) { showReader(n, 'Module ' + n, cached); return; }
+  document.getElementById('readerContent').innerHTML = '<div style="text-align:center;padding:40px;"><span class="spinner"></span></div>';
+  document.getElementById('reader').classList.add('active');
+  try {
+    const res = await fetch(API_BASE + '/api/chapters/' + n, {
+      headers: { 'x-session-token': token, 'x-device-id': getDeviceId() }
+    });
+    if (!res.ok) {
+      closeReader();
+      if (res.status === 401) { localStorage.removeItem('token'); loadApp(); }
+      return;
+    }
+    const text = await res.text();
+    localStorage.setItem(cacheKey, text);
+    showReader(n, 'Module ' + n, text);
+  } catch (e) { closeReader(); alert('Network error. Cannot load chapter.'); }
+}
+function showReader(n, title, markdown) {
+  currentChapter = n;
+  document.getElementById('readerTitle').textContent = title;
+  document.getElementById('readerContent').innerHTML = renderMarkdown(markdown);
+  document.getElementById('reader').classList.add('active');
+  document.getElementById('reader').scrollTop = 0;
+  renderChapterNav();
+}
+function renderChapterNav() {
+  const nav = document.getElementById('chapterNav');
+  const prev = currentChapter > 1;
+  const next = currentChapter < totalChapters && (currentChapter < 2 || getToken());
+  let html = '';
+  html += '<button ' + (prev ? 'onclick="goToChapter(' + (currentChapter - 1) + ')"' : 'disabled') + '>← Previous</button>';
+  html += '<span class="hint">' + currentChapter + ' / ' + totalChapters + '</span>';
+  html += '<button ' + (next ? 'onclick="goToChapter(' + (currentChapter + 1) + ')"' : 'disabled') + '>Next →</button>';
+  nav.innerHTML = html;
+}
+function goToChapter(n) {
+  if (n < 1 || n > totalChapters) return;
+  if (n > 2 && !getToken()) { openBuyModal(); return; }
+  if (n <= 2) { openFreeChapter(n); }
+  else { openPaidChapter(n); }
+}
+function closeReader() {
+  document.getElementById('reader').classList.remove('active');
+}
+function renderMarkdown(md) {
+  md = md.replace(/\u200B/g, '');
+  const quizzes = [];
+  md = md.replace(/:::quiz\s*\n([\s\S]*?)\n:::/g, function(match, content) {
+    quizzes.push(content.trim());
+    return '\n\n__QUIZ_PLACEHOLDER_' + (quizzes.length - 1) + '__\n\n';
+  });
+  let html = md
+    .replace(/```([\s\S]*?)```/g, function(_, code) { return '<pre>' + escapeHtml(code.trim()) + '</pre>'; })
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" onerror="this.style.display=\'none\'">')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^\s*[-*] (.+)$/gm, '<li>$1</li>')
+    .replace(/^\s*(\d+)\. (.+)$/gm, '<li>$2</li>');
+  html = html.replace(/(<li>[\s\S]*?<\/li>)(?!\s*<li>)/g, '<ul>$1</ul>');
+  html = html.replace(/<\/ul>\s*<ul>/g, '');
+  html = html.split(/\n{2,}/).map(function(block) {
+    if (block.match(/^<(h[1-3]|ul|pre|table|img)/)) return block;
+    if (block.match(/^<li/)) return '<ul>' + block + '</ul>';
+    if (block.match(/^__QUIZ_PLACEHOLDER_\d+__$/)) return block;
+    return block.trim() ? '<p>' + block.replace(/\n/g, '<br>') + '</p>' : '';
+  }).join('');
+  html = html.replace(/__QUIZ_PLACEHOLDER_(\d+)__/g, function(match, idx) {
+    const quizData = parseQuiz(quizzes[Number(idx)]);
+    if (!quizData) return '';
+    const quizId = 'quiz_' + currentChapter + '_' + idx;
+    window['QUIZ_DATA_' + quizId] = quizData;
+    return buildQuizHTML(quizId, quizData);
+  });
+  return html;
+}
+function parseQuiz(raw) {
+  const questions = [];
+  const blocks = raw.split(/\n\s*\n/);
+  let current = null;
+  for (let i = 0; i < blocks.length; i++) {
+    const block = blocks[i].trim();
+    if (!block) continue;
+    const lines = block.split('\n').map(function(l) { return l.trim(); });
+    let qText = '';
+    let options = [];
+    let answer = '';
+    let explanation = '';
+    for (let j = 0; j < lines.length; j++) {
+      const line = lines[j];
+      if (line.startsWith('Question') || line.match(/^Q\d/)) {
+        qText = line.replace(/^Question\s*\d+\s*[:.]\s*/i, '').replace(/^Q\d+\s*[:.]\s*/i, '');
+      } else if (line.match(/^[A-D]\)/)) {
+        options.push(line.replace(/^([A-D])\)\s*/, '$1) '));
+      } else if (line.match(/^Answer\s*[:.]/i)) {
+        answer = line.replace(/^Answer\s*[:.]\s*/i, '').trim().toUpperCase().charAt(0);
+      } else if (line.match(/^Explanation\s*[:.]/i)) {
+        explanation = line.replace(/^Explanation\s*[:.]\s*/i, '').trim();
+      } else if (qText && line) {
+        if (answer && !explanation) {
+          explanation = line;
+        } else if (!options.length) {
+          qText += ' ' + line;
+        }
+      }
+    }
+    if (qText && options.length === 4 && answer) {
+      questions.push({ q: qText, options: options, answer: answer, explanation: explanation });
+    }
+  }
+  return questions.length > 0 ? questions : null;
+}
+function buildQuizHTML(quizId, questions) {
+  return '<div class="quiz-container" id="' + quizId + '" data-quiz-id="' + quizId + '">' +
+    '<div class="quiz-progress">Question <span class="quiz-current">1</span> of ' + questions.length + '</div>' +
+    '<div class="quiz-progress-bar"><div class="quiz-progress-bar-fill" style="width:' + (100 / questions.length) + '%"></div></div>' +
+    '<div class="quiz-question"></div>' +
+    '<div class="quiz-options"></div>' +
+    '<div class="quiz-nav">' +
+      '<button class="secondary quiz-prev" onclick="quizPrev(\'' + quizId + '\')">← Previous</button>' +
+      '<button class="primary quiz-next" onclick="quizNext(\'' + quizId + '\')">Next →</button>' +
+    '</div>' +
+  '</div>';
+}
+function initQuiz(quizId) {
+  const quizData = window['QUIZ_DATA_' + quizId];
+  if (!quizData) return;
+  const container = document.getElementById(quizId);
+  if (!container) return;
+  container._state = {
+    current: 0,
+    answers: {},
+    completed: false
+  };
+  renderQuizQuestion(quizId);
+}
+function renderQuizQuestion(quizId) {
+  const container = document.getElementById(quizId);
+  if (!container || !container._state) return;
+  const questions = window['QUIZ_DATA_' + quizId];
+  const state = container._state;
+  const q = questions[state.current];
+  container.querySelector('.quiz-current').textContent = state.current + 1;
+  container.querySelector('.quiz-progress-bar-fill').style.width = ((state.current + 1) / questions.length * 100) + '%';
+  container.querySelector('.quiz-question').textContent = q.q;
+  const optionsEl = container.querySelector('.quiz-options');
+  optionsEl.innerHTML = q.options.map(function(opt, i) {
+    const letter = opt.charAt(0);
+    const selected = state.answers[state.current] === letter;
+    return '<div class="quiz-option' + (selected ? ' selected' : '') + '" onclick="quizSelect(\'' + quizId + '\',' + state.current + ',\'' + letter + '\')">' + escapeHtml(opt) + '</div>';
+  }).join('');
+  const prevBtn = container.querySelector('.quiz-prev');
+  const nextBtn = container.querySelector('.quiz-next');
+  prevBtn.disabled = state.current === 0;
+  nextBtn.textContent = state.current === questions.length - 1 ? 'Finish Quiz →' : 'Next →';
+  nextBtn.disabled = !state.answers[state.current];
+}
+function quizSelect(quizId, qIndex, letter) {
+  const container = document.getElementById(quizId);
+  if (!container || !container._state) return;
+  container._state.answers[qIndex] = letter;
+  renderQuizQuestion(quizId);
+}
+function quizPrev(quizId) {
+  const container = document.getElementById(quizId);
+  if (!container || !container._state) return;
+  if (container._state.current > 0) {
+    container._state.current--;
+    renderQuizQuestion(quizId);
+  }
+}
+function quizNext(quizId) {
+  const container = document.getElementById(quizId);
+  if (!container || !container._state) return;
+  const questions = window['QUIZ_DATA_' + quizId];
+  const state = container._state;
+  if (state.current < questions.length - 1) {
+    state.current++;
+    renderQuizQuestion(quizId);
+  } else {
+    showQuizResults(quizId);
+  }
+}
+function showQuizResults(quizId) {
+  const container = document.getElementById(quizId);
+  if (!container || !container._state) return;
+  const questions = window['QUIZ_DATA_' + quizId];
+  const state = container._state;
+  let score = 0;
+  questions.forEach(function(q, i) {
+    if (state.answers[i] === q.answer) score++;
+  });
+  const pct = Math.round((score / questions.length) * 100);
+  let msgClass = '', msgText = '';
+  if (pct >= 90) { msgClass = 'excellent'; msgText = 'Excellent! You are exam-ready.'; }
+  else if (pct >= 70) { msgClass = 'good'; msgText = 'Good! Keep practising.'; }
+  else if (pct >= 50) { msgClass = 'fair'; msgText = 'Fair. Review the chapter and try again.'; }
+  else { msgClass = 'poor'; msgText = 'Keep studying. Read the chapter again.'; }
+  let reviewHtml = '<div style="margin-top:24px;"><h3 style="color:#1e3a8a;margin-bottom:12px;">Review Your Answers</h3>';
+  questions.forEach(function(q, i) {
+    const userAns = state.answers[i];
+    const isCorrect = userAns === q.answer;
+    reviewHtml += '<div class="quiz-review-item ' + (isCorrect ? 'correct-item' : 'wrong-item') + '">' +
+      '<div class="q">' + (i + 1) + '. ' + escapeHtml(q.q) + '</div>' +
+      '<div class="a">Your answer: <strong>' + (userAns || 'Not answered') + '</strong>' + (isCorrect ? ' ✅' : ' ❌') + '</div>' +
+      (isCorrect ? '' : '<div class="a">Correct answer: <strong>' + q.answer + '</strong></div>') +
+      (q.explanation ? '<div class="explanation">' + escapeHtml(q.explanation) + '</div>' : '') +
+    '</div>';
+  });
+  reviewHtml += '</div>';
+  container.innerHTML =
+    '<div class="quiz-result">' +
+      '<div style="font-size:14px;color:#6b7280;">Your Score</div>' +
+      '<div class="score">' + score + ' / ' + questions.length + '</div>' +
+      '<div class="msg ' + msgClass + '">' + msgText + '</div>' +
+      '<button class="retake" onclick="retakeQuiz(\'' + quizId + '\')">🔄 Retake Quiz</button>' +
+    '</div>' +
+    reviewHtml;
+}
+function retakeQuiz(quizId) {
+  const container = document.getElementById(quizId);
+  if (!container) return;
+  const questions = window['QUIZ_DATA_' + quizId];
+  container.innerHTML =
+    '<div class="quiz-progress">Question <span class="quiz-current">1</span> of ' + questions.length + '</div>' +
+    '<div class="quiz-progress-bar"><div class="quiz-progress-bar-fill" style="width:' + (100 / questions.length) + '%"></div></div>' +
+    '<div class="quiz-question"></div>' +
+    '<div class="quiz-options"></div>' +
+    '<div class="quiz-nav">' +
+      '<button class="secondary quiz-prev" onclick="quizPrev(\'' + quizId + '\')">← Previous</button>' +
+      '<button class="primary quiz-next" onclick="quizNext(\'' + quizId + '\')">Next →</button>' +
+    '</div>';
+  initQuiz(quizId);
+}
+function initAllQuizzes() {
+  document.querySelectorAll('.quiz-container').forEach(function(el) {
+    const id = el.getAttribute('data-quiz-id');
+    if (id) initQuiz(id);
+  });
+}
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function closeImageOverlay(){var o=document.getElementById('imageOverlay');o.classList.remove('active');document.body.style.overflow='';}
+document.addEventListener('click',function(e){if(e.target.tagName==='IMG'&&e.target.closest('.reader-content')){var overlay=document.getElementById('imageOverlay');var existing=overlay.querySelector('img');if(existing)existing.remove();var big=document.createElement('img');big.src=e.target.src;big.style.touchAction='pinch-zoom';overlay.appendChild(big);overlay.classList.add('active');document.body.style.overflow='hidden';}});
+const _origShowReader = showReader;
+showReader = function(n, title, markdown) {
+  _origShowReader(n, title, markdown);
+  setTimeout(initAllQuizzes, 50);
+};
+const params = new URLSearchParams(window.location.search);
+if (params.get('ref')) {
+  fetch(API_BASE + '/api/verify/' + params.get('ref'))
+    .then(function(r) { return r.json(); })
+    .then(function(d) { if (d.paid) alert('Payment received! Check your email/SMS for the PIN.'); })
+    .catch(function() {});
+}
+loadApp();
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(function() {});
+}
+</script>
+</body>
+</html>
